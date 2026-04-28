@@ -56,7 +56,7 @@ export default function MapViewer({
     const container = containerRef.current
     if (!container) return
     const { width: cw, height: ch } = container.getBoundingClientRect()
-    const scale = Math.min(cw / nw, ch / nh) * 0.88
+    const scale = Math.min(cw / nw, ch / nh) * 0.72
     const x = (cw - nw * scale) / 2
     const y = (ch - nh * scale) / 2
     applyTransform({ x, y, scale })
@@ -293,11 +293,11 @@ export default function MapViewer({
       )}
 
       {presentationMode && (
-        <button className="exit-present-btn" onClick={onExitPresentation} title="Exit presentation">
+        <button className="exit-present-btn" onClick={onExitPresentation} title="Editor">
           <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round">
             <path d="M18 6L6 18M6 6l12 12"/>
           </svg>
-          Editor Mode
+          Editor
         </button>
       )}
     </div>

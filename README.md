@@ -1,5 +1,5 @@
 # Map Tagger
-An interactive image annotation tool. Upload any image, explore it with pan and zoom, and place customizable tags that show tooltips on hover.
+An interactive image annotation tool. Upload any image, explore it with pan and zoom, and place customizable tags that show tooltips on hover. Created with Claude Code support.
 
 ## Installation
 
