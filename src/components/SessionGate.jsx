@@ -55,7 +55,12 @@ export default function SessionGate({ onImport, onCreate }) {
             <path d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6-3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/>
           </svg>
         </div>
-        <h1 className="sg-title">Map <span>Tagger</span></h1>
+        <h1 className="sg-title">
+          Map <span>Tagger</span>
+          <span className="sg-sub" style={{ fontSize: '10px', marginLeft: 6, opacity:0.5 }}>
+            v1
+          </span>
+        </h1>
         <p className="sg-sub">An image tagging tool with the GM's best interests in mind.</p>
         <p className="sg-sub">Import a session .json file to begin, or start a new one.</p>
         <div className="sg-actions">
