@@ -1,5 +1,5 @@
 # Map Tagger
-An interactive image annotation tool. Upload any image, explore it with pan and zoom, and place customizable tags that show tooltips on hover. Created with Claude Code support.
+An interactive image annotation tool. Upload any image, explore it with pan and zoom, and place customizable tags that show tooltips on hover. Assisted by Claude.
 
 ## Installation
 
@@ -20,7 +20,6 @@ npm run dev
 ```
 
 Then open [http://localhost:5173](http://localhost:5173) in your browser.
-
 
 ## Building for Production
 
@@ -55,3 +54,4 @@ When creating or editing a tag you can configure:
 - **Shape** — circle, square, triangle, star, or diamond
 - **Color** — eight presets or a custom color picker
 - **Size** — drag the slider between 12 px and 64 px
+- **Opacity** — drag the slider between 0-100
