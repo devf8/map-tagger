@@ -1,0 +1,217 @@
+.image-list {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  flex: 1;
+}
+
+/* ── Add map button ── */
+.il-actions {
+  padding: 10px 10px 6px;
+  flex-shrink: 0;
+}
+
+.add-map-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 9px 12px;
+  border-radius: 8px;
+  border: 1.5px dashed #353a52;
+  background: transparent;
+  color: #8892aa;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s, color 0.15s;
+  font-family: inherit;
+}
+
+.add-map-btn:hover {
+  border-color: #5c7cfa;
+  background: rgba(92, 124, 250, 0.07);
+  color: #748ffc;
+}
+
+/* ── Images list ── */
+.images-scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 6px 6px;
+  scrollbar-width: thin;
+  scrollbar-color: #353a52 transparent;
+}
+
+.images-empty {
+  text-align: center;
+  padding: 24px 0;
+  font-size: 12px;
+  color: #545d7a;
+}
+
+.image-item {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 7px 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.1s, opacity 0.1s, border-color 0.1s;
+  position: relative;
+  border: 1px solid transparent;
+}
+
+.image-item.reorder-dragging {
+  opacity: 0.4;
+}
+
+.image-item.reorder-over {
+  border-top-color: #5c7cfa;
+  background: rgba(92, 124, 250, 0.06);
+}
+
+.image-item:hover {
+  background: #252836;
+}
+
+.image-item.selected {
+  background: rgba(92, 124, 250, 0.1);
+  border-color: rgba(92, 124, 250, 0.25);
+}
+
+.drag-handle {
+  width: 10px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #353a52;
+  opacity: 0;
+  transition: opacity 0.1s;
+  cursor: grab;
+  margin-left: -2px;
+}
+
+.image-item:hover .drag-handle {
+  opacity: 1;
+}
+
+.image-thumb {
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  overflow: hidden;
+  background: #252836;
+  flex-shrink: 0;
+  border: 1px solid #353a52;
+}
+
+.image-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.image-meta {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.image-name {
+  font-size: 12px;
+  font-weight: 500;
+  color: #c8d0e0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.image-info {
+  font-size: 11px;
+  color: #545d7a;
+}
+
+.image-actions {
+  display: flex;
+  gap: 2px;
+  opacity: 0;
+  transition: opacity 0.1s;
+  flex-shrink: 0;
+}
+
+.image-item:hover .image-actions {
+  opacity: 1;
+}
+
+.image-action-btn {
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  background: transparent;
+  color: #545d7a;
+  transition: background 0.1s, color 0.1s;
+  cursor: pointer;
+}
+
+.image-action-btn:hover {
+  background: #2d3148;
+  color: #e2e8f0;
+}
+
+.image-action-btn.danger:hover {
+  background: rgba(252, 92, 125, 0.15);
+  color: #fc5c7d;
+}
+
+.image-action-btn.is-default {
+  color: #5c7cfa;
+}
+
+.default-badge {
+  font-size: 10px;
+  color: #5c7cfa;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+/* ── Import / Export ── */
+.il-data-actions {
+  display: flex;
+  gap: 6px;
+  padding: 6px 10px 10px;
+  border-top: 1px solid #252836;
+  flex-shrink: 0;
+}
+
+.data-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 6px 8px;
+  border-radius: 6px;
+  border: 1px solid #353a52;
+  background: transparent;
+  color: #545d7a;
+  font-size: 11px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.1s, color 0.1s, border-color 0.1s;
+  font-family: inherit;
+}
+
+.data-btn:hover {
+  background: #252836;
+  color: #e2e8f0;
+  border-color: #5c7cfa;
+}

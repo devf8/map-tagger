@@ -1,0 +1,233 @@
+.map-editor-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  backdrop-filter: blur(2px);
+  animation: overlay-in 0.15s ease;
+}
+
+.map-editor {
+  background: #1a1d27;
+  border: 1px solid #353a52;
+  border-radius: 12px;
+  width: 380px;
+  max-height: 88vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.6);
+  animation: panel-in 0.18s cubic-bezier(0.34, 1.56, 0.64, 1);
+  overflow: hidden;
+}
+
+.me-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px;
+  border-bottom: 1px solid #353a52;
+  flex-shrink: 0;
+}
+
+.me-header-icon {
+  width: 20px;
+  height: 20px;
+  color: #5c7cfa;
+  flex-shrink: 0;
+}
+
+.me-header h2 {
+  font-size: 15px;
+  font-weight: 600;
+  color: #e2e8f0;
+  flex: 1;
+}
+
+.me-close {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  background: transparent;
+  color: #545d7a;
+  cursor: pointer;
+  transition: background 0.1s, color 0.1s;
+}
+
+.me-close:hover { background: #252836; color: #e2e8f0; }
+
+.me-body {
+  overflow-y: auto;
+  flex: 1;
+  scrollbar-width: thin;
+  scrollbar-color: #353a52 transparent;
+}
+
+.me-section {
+  padding: 14px 16px;
+}
+
+.me-section + .me-section {
+  border-top: 1px solid #252836;
+}
+
+.me-section h3 {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: #545d7a;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.me-section h3 small {
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+  color: #3d4461;
+}
+
+.me-section label {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 10px;
+}
+
+.me-section label:last-child { margin-bottom: 0; }
+
+.me-select {
+  background: #252836;
+  border: 1px solid #353a52;
+  border-radius: 6px;
+  padding: 8px 10px;
+  color: #e2e8f0;
+  font-size: 13px;
+  font-family: inherit;
+  transition: border-color 0.12s;
+  width: 100%;
+  outline: none;
+}
+
+.me-checkbox-row {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin-top: 4px;
+}
+
+.me-checkbox-label {
+  display: flex;
+  flex-direction: row !important;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  margin-bottom: 0 !important;
+}
+
+.me-checkbox-label input[type="checkbox"] {
+  width: 14px;
+  height: 14px;
+  accent-color: #5c7cfa;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.me-checkbox-label span {
+  font-size: 13px;
+  font-weight: 500;
+  color: #e2e8f0;
+}
+
+.me-checkbox-row > small {
+  font-size: 11px;
+  color: #545d7a;
+  padding-left: 22px;
+}
+
+.me-section label > span {
+  font-size: 12px;
+  font-weight: 500;
+  color: #8892aa;
+}
+
+.me-section input[type="text"],
+.me-section input[type="url"],
+.me-section textarea {
+  background: #252836;
+  border: 1px solid #353a52;
+  border-radius: 6px;
+  padding: 8px 10px;
+  color: #e2e8f0;
+  font-size: 13px;
+  font-family: inherit;
+  transition: border-color 0.12s;
+  width: 100%;
+  resize: none;
+  outline: none;
+}
+
+.me-section input[type="text"]:focus,
+.me-section input[type="url"]:focus,
+.me-section textarea:focus { border-color: #5c7cfa; }
+
+.me-section input::placeholder,
+.me-section textarea::placeholder { color: #545d7a; }
+
+.me-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 12px 16px;
+  border-top: 1px solid #353a52;
+  flex-shrink: 0;
+}
+
+.me-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: 7px;
+  font-size: 13px;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s;
+}
+
+.me-btn.primary { background: #5c7cfa; color: #fff; }
+.me-btn.primary:hover { background: #748ffc; }
+
+.me-btn.ghost {
+  background: transparent;
+  color: #8892aa;
+  border: 1px solid #353a52;
+}
+.me-btn.ghost:hover { background: #252836; color: #e2e8f0; }
+
+.me-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+@keyframes overlay-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes panel-in {
+  from { opacity: 0; transform: scale(0.93) translateY(12px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}

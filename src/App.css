@@ -1,0 +1,108 @@
+:root {
+  --bg: #0f1117;
+  --surface: #1a1d27;
+  --surface2: #252836;
+  --surface3: #2d3148;
+  --border: #353a52;
+  --accent: #5c7cfa;
+  --accent-hover: #748ffc;
+  --accent-dim: rgba(92, 124, 250, 0.15);
+  --text: #e2e8f0;
+  --text-secondary: #8892aa;
+  --text-muted: #545d7a;
+  --danger: #fc5c7d;
+  --danger-hover: #ff7191;
+  --danger-dim: rgba(252, 92, 125, 0.15);
+  --success: #43e97b;
+  --sidebar-width: 220px;
+  --panel-width: 300px;
+  --toolbar-height: 56px;
+  --radius: 8px;
+  --radius-sm: 5px;
+}
+
+.app {
+  display: grid;
+  grid-template-columns: var(--sidebar-width) 1fr;
+  grid-template-rows: 1fr;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.app.presentation,
+.app.no-sidebar {
+  grid-template-columns: 1fr;
+}
+
+/* ── Sidebar ── */
+.sidebar {
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.sidebar-header {
+  padding: 16px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.sidebar-header h1 {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--text);
+}
+
+.sidebar-header span {
+  color: var(--accent);
+}
+
+.sidebar-session-name {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── Main ── */
+.main {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+  background: var(--bg);
+}
+
+/* ── Empty state ── */
+.empty-state {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.empty-state svg {
+  width: 64px;
+  height: 64px;
+  opacity: 0.25;
+}
+
+.empty-state h2 {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.empty-state p {
+  font-size: 14px;
+  color: var(--text-secondary);
+}

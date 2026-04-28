@@ -1,0 +1,227 @@
+.tag-marker {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  pointer-events: all;
+}
+
+.tag-marker.readonly { cursor: default; }
+.tag-marker:hover    { z-index: 20; }
+.tag-marker.editing  { z-index: 30; }
+
+/* ── Tooltip ─────────────────────────────────────── */
+.tag-tooltip {
+  position: absolute;
+  background: rgba(15, 17, 23, 0.96);
+  border: 1px solid #353a52;
+  border-radius: 8px;
+  padding: 10px 14px;
+  min-width: 160px;
+  max-width: 240px;
+  /* pointer-events: auto keeps the tooltip "inside" the marker for mouseleave purposes */
+  pointer-events: auto;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  /* Appear instantly — fade only happens on leave via .leaving */
+  animation: tooltip-appear 0.1s ease;
+  white-space: normal;
+  z-index: 1;
+}
+
+/* Fade out — only on leave. No fade-in. */
+.tag-tooltip.leaving {
+  opacity: 0;
+  transition: opacity 0.22s ease;
+  pointer-events: none;
+}
+
+/* ── Tooltip arrows per position ── */
+.tag-tooltip::after {
+  content: '';
+  position: absolute;
+  border: 9px solid transparent;
+}
+
+.tag-tooltip--top::after {
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-top-color: #353a52;
+}
+
+.tag-tooltip--bottom::after {
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-bottom-color: #353a52;
+}
+
+.tag-tooltip--left::after {
+  left: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  border-left-color: #353a52;
+}
+
+.tag-tooltip--right::after {
+  right: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  border-right-color: #353a52;
+}
+
+/* Extra right padding when gear button is present so title doesn't overlap it */
+.tag-tooltip--editable {
+  padding-right: 36px;
+}
+
+/* ── Gear edit button ── */
+.tag-gear-btn {
+  position: absolute;
+  top: 7px;
+  right: 7px;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  background: transparent;
+  color: #545d7a;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s;
+}
+
+.tag-gear-btn:hover {
+  background: #2d3148;
+  color: #e2e8f0;
+}
+
+.tag-tooltip-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #e2e8f0;
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tag-tooltip-desc {
+  font-size: 12px;
+  color: #8892aa;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* ── Editor-only notes ── */
+.tag-editor-notes {
+  font-style: italic;
+  color: rgba(134, 150, 180, 0.65);
+  font-size: 12px;
+  line-height: 1.5;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255,255,255,0.07);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* ── Nav button ── */
+.tag-nav-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  width: 100%;
+  margin-top: 10px;
+  padding: 6px 10px;
+  background: rgba(92, 124, 250, 0.12);
+  border: 1px solid rgba(92, 124, 250, 0.25);
+  border-radius: 6px;
+  color: #748ffc;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.12s, border-color 0.12s, color 0.12s;
+}
+
+.tag-nav-btn:hover {
+  background: rgba(92, 124, 250, 0.22);
+  border-color: rgba(92, 124, 250, 0.5);
+  color: #a5b8ff;
+}
+
+/* ── Icon ── */
+.tag-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.12s ease;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4));
+  flex-shrink: 0;
+}
+
+.tag-marker:not(.readonly) .tag-icon {
+  cursor: grab;
+}
+
+.tag-marker:not(.readonly):hover .tag-icon {
+  transform: scale(1.15);
+}
+
+.tag-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: 2px solid #fff;
+  opacity: 0.8;
+  animation: ring-pulse 1.5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* ── Label — absolutely below icon, fades when tooltip is visible ── */
+.tag-label {
+  position: absolute;
+  top: calc(100% + 5px);
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 11px;
+  font-weight: 600;
+  color: #e2e8f0;
+  background: rgba(15, 17, 23, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 2px 7px;
+  border-radius: 10px;
+  white-space: nowrap;
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  pointer-events: none;
+  backdrop-filter: blur(4px);
+  transition: opacity 0.15s ease;
+}
+
+.tag-marker.active .tag-label {
+  opacity: 0;
+}
+
+@keyframes tooltip-appear {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes ring-pulse {
+  0%, 100% { opacity: 0.8; transform: translate(-50%, -50%) scale(1); }
+  50%       { opacity: 0.3; transform: translate(-50%, -50%) scale(1.15); }
+}
