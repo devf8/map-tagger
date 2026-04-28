@@ -7,7 +7,7 @@ import './TagMarker.css'
 
 export default function TagMarker({
   tag, transform, imageSize, isEditing,
-  onClick, onNavigate, onDragStart, presentationMode,
+  onClick, onNavigate, onDragStart, presentationMode, 
 }) {
   const [shown, setShown] = useState(false)
   const [leaving, setLeaving] = useState(false)
@@ -106,7 +106,7 @@ let POS_STYLE = {
       </div>
 
       {tag.shortTitle && (
-        <div className="tag-label">{tag.shortTitle}</div>
+        <div className={`tag-label ${tag.isPrivate? 'tag-label--private' : ''}`}>{tag.shortTitle}{tag.isPrivate && '*'}</div>
       )}
     </div>
   )

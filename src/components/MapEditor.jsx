@@ -44,6 +44,17 @@ export default function MapEditor({ image, isDefault, onToggleDefault, onSave, o
 
           <section className="me-section">
             <h3>Identity</h3>
+              <div className="me-checkbox-row">
+              <label className="me-checkbox-label">
+                <input
+                  type="checkbox"
+                  checked={!!isDefault}
+                  onChange={e => onToggleDefault(image.id, e.target.checked)}
+                />
+                <span>Default map</span>
+              </label>
+              <small>opened automatically when loading this session</small>
+            </div>
             <label>
               <span>Display Name</span>
               <input
@@ -63,39 +74,6 @@ export default function MapEditor({ image, isDefault, onToggleDefault, onSave, o
                 rows={3}
               />
             </label>
-            <div className="me-checkbox-row">
-              <label className="me-checkbox-label">
-                <input
-                  type="checkbox"
-                  checked={!!isDefault}
-                  onChange={e => onToggleDefault(image.id, e.target.checked)}
-                />
-                <span>Default map</span>
-              </label>
-              <small>opened automatically when loading this session</small>
-            </div>
-          </section>
-
-          <section className="me-section">
-            <label>
-                <span>Background Pattern</span>
-              <select
-                className="me-select"
-                value={form.background ?? ''}
-                onChange={e => set('background', e.target.value)}
-              >
-                {BACKGROUNDS.map(bg => (
-                  <option key={bg.id} value={bg.id}>{bg.label}</option>
-                ))}
-              </select>
-            {form.background && (
-              <div
-                className="me-bg-preview"
-                style={{ backgroundImage: getBackgroundCss(form.background) }}
-              />
-            )}
-            </label>
-       
           </section>
 
           <section className="me-section">
@@ -118,6 +96,30 @@ export default function MapEditor({ image, isDefault, onToggleDefault, onSave, o
                 onChange={e => set('subtitle', e.target.value)}
               />
             </label>
+          </section>
+
+          <section className="me-section">
+            <label>
+                <span>Background Pattern</span>
+              <div style={{ minHeight:21 }}>
+              <select
+                className="me-select"
+                value={form.background ?? ''}
+                onChange={e => set('background', e.target.value)}
+              >
+                {BACKGROUNDS.map(bg => (
+                  <option key={bg.id} value={bg.id}>{bg.label}</option>
+                ))}
+              </select>
+              </div>
+            {form.background && (
+              <div
+                className="me-bg-preview"
+                style={{ backgroundImage: getBackgroundCss(form.background) }}
+              />
+            )}
+            </label>
+       
           </section>
 
         </div>

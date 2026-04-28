@@ -161,7 +161,7 @@
 .size-slider {
   -webkit-appearance: none;
   appearance: none;
-  width: 100px;
+  width: 80px;
   height: 4px;
   background: #353a52;
   border-radius: 2px;

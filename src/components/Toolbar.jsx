@@ -44,15 +44,16 @@ export default function Toolbar({ tool, onToolChange, tagDefaults, onTagDefaults
         <button
           className={`tool-btn ${tool === 'tag' ? 'active' : ''}`}
           onClick={() => onToolChange('tag')}
-          title="Add Tag"
+          title="Tag"
         >
           <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
             <path d="M12 5v14M5 12h14"/>
           </svg>
-          Add Tag
+          Tag
         </button>
       </div>
-
+      <div className="toolbar-divider" />
+      <span className="toolbar-label">Defaults</span>
       <div className="toolbar-divider" />
 
       {/* Shape picker */}
@@ -115,6 +116,21 @@ export default function Toolbar({ tool, onToolChange, tagDefaults, onTagDefaults
           className="size-slider"
         />
       </div>
+
+      {/* Opacity slider */}
+      {/* <div className="toolbar-group">
+        <span className="toolbar-label">Opacity <em>{Math.round(tagDefaults.opacity * 100)}%</em></span>
+        <input
+          type="range"
+          min="0"
+          max="1"
+          step="0.1"
+          value={tagDefaults.opacity}
+          onChange={e => set('opacity', +e.target.value)}
+          className="size-slider"
+        />
+      </div> */}
+
 
       {/* Present button — pushed to the right */}
       <div style={{ flex: 1 }} />

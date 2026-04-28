@@ -212,6 +212,10 @@
   transition: opacity 0.15s ease;
 }
 
+.tag-label--private {
+ font-style: italic;
+}
+
 .tag-marker.active .tag-label {
   opacity: 0;
 }

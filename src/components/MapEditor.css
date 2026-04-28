@@ -106,7 +106,7 @@
 .me-section label:last-child { margin-bottom: 0; }
 
 .me-select {
-  background: #252836;
+  background: #383d51;
   border: 1px solid #353a52;
   border-radius: 6px;
   padding: 8px 10px;
@@ -116,6 +116,7 @@
   transition: border-color 0.12s;
   width: 100%;
   outline: none;
+  overflow-y: visible;
 }
 
 .me-checkbox-row {
@@ -123,6 +124,7 @@
   flex-direction: column;
   gap: 3px;
   margin-top: 4px;
+  margin-bottom: 6px;
 }
 
 .me-checkbox-label {

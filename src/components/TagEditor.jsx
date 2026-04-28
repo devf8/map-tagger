@@ -85,12 +85,23 @@ export default function TagEditor({ tag, isNew, images = [], onSave, onDelete, o
             <label>
               <span>Editor Notes <small>hidden in presentation</small></span>
               <textarea
-                placeholder="Private notes visible only in edit mode…"
+                placeholder="Notes visible only in editor…"
                 value={form.editorNotes ?? ''}
                 onChange={e => set('editorNotes', e.target.value)}
                 rows={2}
               />
             </label>
+            <div className="me-checkbox-row">
+              <label className="me-checkbox-label">
+                <input
+                  type="checkbox"
+                  checked={!!form.isPrivate}
+                  onChange={e => set('isPrivate', e.target.checked)}
+                />
+                <span>Private tag</span>
+              </label>
+              <small>Visible only in editor</small>
+            </div>
           </section>
 
           {/* ── Style ── */}

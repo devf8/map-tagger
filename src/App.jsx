@@ -22,7 +22,7 @@ export default function App() {
   const [editingMap, setEditingMap] = useState(null)
   const [showAddMap, setShowAddMap] = useState(false)
   const [tool, setTool] = useState('pan')
-  const [tagDefaults, setTagDefaults] = useState({ shape: 'circle', color: '#5c7cfa', size: 28 })
+  const [tagDefaults, setTagDefaults] = useState({ shape: 'circle', color: '#5c7cfa', size: 28, opacity: 1 })
   const [presentationMode, setPresentationMode] = useState(false)
   const [sidebarVisible, setSidebarVisible] = useState(true)
   const [mapTransition, setMapTransition] = useState(null)

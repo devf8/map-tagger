@@ -247,6 +247,8 @@ export default function MapViewer({
       )}
 
       {imageSize.width > 0 && tags.map(tag => {
+        if (presentationMode && tag.isPrivate) 
+          return null;
         const t = tagDrag?.id === tag.id
           ? { ...tag, x: tagDrag.currentX, y: tagDrag.currentY }
           : tag
