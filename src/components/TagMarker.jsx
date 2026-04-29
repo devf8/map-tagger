@@ -91,7 +91,7 @@ export default function TagMarker({
           {tag.fullTitle && <div className={`tag-tooltip-title ${tag.isPrivate ? 'tag-tooltip-title--private' : ''}`}>{tag.fullTitle}</div>}
           {tag.description && <div className="tag-tooltip-desc">{tag.description}</div>}
           {!presentationMode && tag.editorNotes && (
-            <p className="tag-editor-notes">{tag.editorNotes}</p>
+            <p className="tag-private-notes">{tag.editorNotes}</p>
           )}
           {tag.linkedMapId && (
             <button className="tag-nav-btn" onClick={handleNavClick}>

@@ -121,7 +121,7 @@
 
 .tag-tooltip-title--private {
   font-style: italic;
-  color: #ffc83c;
+   color: #ffc83c;
 }
 
 
@@ -134,7 +134,7 @@
 }
 
 /* ── Editor-only notes ── */
-.tag-editor-notes {
+.tag-private-notes {
   font-style: italic;
   color: rgba(134, 150, 180, 0.65);
   font-size: 12px;
@@ -144,6 +144,8 @@
   border-top: 1px solid rgba(255,255,255,0.07);
   white-space: pre-wrap;
   word-break: break-word;
+  font-style: italic;
+  color: #ffc83c;
 }
 
 /* ── Nav button ── */
