@@ -104,7 +104,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 5px;
-  max-width: 320px;
+  max-width: 280px;
 }
 
 .lf-chip {
@@ -117,16 +117,11 @@
   font-weight: 600;
   font-family: inherit;
   cursor: pointer;
-  background: #5c7cfa;
-  border: 1px solid #5c7cfa;
+  background: #4b5268;
+  border: 1px solid #5670d8;
   color: #fff;
   backdrop-filter: blur(6px);
   transition: background 0.12s, border-color 0.12s, color 0.12s, opacity 0.12s;
-}
-
-.lf-chip--toggle-all {
-
-
 }
 
 .lf-chip:hover {
