@@ -90,7 +90,7 @@
   color: #353a52;
   opacity: 0;
   transition: opacity 0.1s;
-  cursor: grab;
+  /* cursor: grab; */
   margin-left: -2px;
 }
 

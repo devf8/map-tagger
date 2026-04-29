@@ -176,9 +176,9 @@ export default function MapViewer({
 
   const activeTool = presentationMode ? 'pan' : tool
   const cursor = transitionPhase ? 'default'
-    : tagDrag ? 'grabbing'
+    : tagDrag ? 'default'
     : activeTool === 'tag' ? 'crosshair'
-    : isDragging ? 'grabbing' : 'grab'
+    : isDragging ? 'default' : 'default'
 
   const zoomCenter = (dir) => applyTransform(p => {
     const s = Math.min(MAX_SCALE, Math.max(MIN_SCALE, p.scale * (dir > 0 ? ZOOM_FACTOR : 1 / ZOOM_FACTOR)))
@@ -231,6 +231,14 @@ export default function MapViewer({
           {imageSize.width > 0 && mapMeta?.description && (
             <div className="map-desc-overlay">
               <p className="map-desc-text">{mapMeta.description}</p>
+            </div>
+          )}
+          {imageSize.width > 0 && !presentationMode && mapMeta?.privateNotes && (
+            <div className="map-notes-overlay">
+              <div className="map-notes-inner">
+                <span className="map-notes-label">Editor Notes</span>
+                <p className="map-notes-text">{mapMeta.privateNotes}</p>
+              </div>
             </div>
           )}
         </div>
@@ -298,7 +306,7 @@ export default function MapViewer({
               <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M19 12H5M12 5l-7 7 7 7"/>
               </svg>
-              Previous
+              Return
             </button>
           )}
 

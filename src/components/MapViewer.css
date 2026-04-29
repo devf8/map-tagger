@@ -227,7 +227,7 @@
   left: 100%;
   top: 0;
   bottom: 0;
-  width: 260px;
+  width: 300px;
   padding: 24px 0 24px 28px;
   display: flex;
   align-items: flex-start;
@@ -238,15 +238,61 @@
 .map-desc-text {
   font-size: 14px;
   line-height: 1.75;
-  color: rgba(148, 163, 184, 0.85);
+  color: rgba(148, 163, 184, 0.93);
   text-shadow: 0 1px 8px rgba(0, 0, 0, 0.9);
   max-height: 100%;
   overflow-y: auto;
   padding-right: 6px;
+  scrollbar-width:thin;
+  scrollbar-color: rgba(255,255,255,0.1) transparent;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* ── Private notes overlay — to the left of the image, editor only ── */
+.map-notes-overlay {
+  position: absolute;
+  right: 100%;
+  top: 0;
+  bottom: 0;
+  width: 400px;
+  padding: 24px 28px 24px 0;
+  display: flex;
+  align-items: flex-start;
+  pointer-events: auto;
+  overflow: hidden;
+}
+
+.map-notes-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 100%;
+  overflow: hidden;
+}
+
+.map-notes-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgb(251, 190, 36);
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.9);
+}
+
+.map-notes-text {
+  font-size: 14px;
+  line-height: 1.75;
+  color: rgb(232, 174, 27);
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.9);
+  max-height: 100%;
+  overflow-y: auto;
+  padding-left: 6px;
   scrollbar-width: thin;
   scrollbar-color: rgba(255,255,255,0.1) transparent;
   white-space: pre-wrap;
   word-break: break-word;
+  /* font-style: oblique; */
 }
 
 /* ── Broken image fallback ── */

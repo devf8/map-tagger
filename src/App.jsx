@@ -295,6 +295,7 @@ export default function App() {
     subtitle: selectedImage.subtitle,
     description: selectedImage.description,
     background: selectedImage.background,
+    privateNotes: selectedImage.privateNotes,
   } : null
 
   if (!hasSession) {

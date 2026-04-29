@@ -12,6 +12,7 @@ export default function MapEditor({ image, isDefault, onToggleDefault, onSave, o
       title: image.title || '',
       subtitle: image.subtitle || '',
       description: image.description || '',
+      privateNotes: image.privateNotes || '',
       background: image.background || '',
     })
   }, [image])
@@ -71,6 +72,15 @@ export default function MapEditor({ image, isDefault, onToggleDefault, onSave, o
                 placeholder="A description of this map…"
                 value={form.description ?? ''}
                 onChange={e => set('description', e.target.value)}
+                rows={3}
+              />
+            </label>
+            <label>
+              <span>Editor Notes <small>hidden in presentation</small></span>
+              <textarea
+                placeholder="Notes visible only in editor…"
+                value={form.privateNotes ?? ''}
+                onChange={e => set('privateNotes', e.target.value)}
                 rows={3}
               />
             </label>

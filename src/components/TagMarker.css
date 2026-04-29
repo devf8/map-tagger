@@ -20,7 +20,7 @@
   border: 1px solid #353a52;
   border-radius: 8px;
   padding: 10px 14px;
-  min-width: 160px;
+  min-width: 190px;
   max-width: 240px;
   /* pointer-events: auto keeps the tooltip "inside" the marker for mouseleave purposes */
   pointer-events: auto;
@@ -35,7 +35,7 @@
 /* Fade out — only on leave. No fade-in. */
 .tag-tooltip.leaving {
   opacity: 0;
-  transition: opacity 0.22s ease;
+  transition: opacity 0.05s ease;
   pointer-events: none;
 }
 
@@ -165,17 +165,17 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.12s ease;
+  transition: transform 0.05s ease;
   /* filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4)); */
   flex-shrink: 0;
 }
 
 .tag-marker:not(.readonly) .tag-icon {
-  cursor: grab;
+  /* cursor: grab; */
 }
 
 .tag-marker:not(.readonly):hover .tag-icon {
-  transform: scale(1.1);
+  transform: scale(1.12);
 }
 
 .tag-rings {
@@ -204,12 +204,12 @@
   padding: 2px 7px;
   border-radius: 10px;
   white-space: nowrap;
-  max-width: 120px;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  /* max-width: 120px; */
+  /* overflow: hidden; */
+  /* text-overflow: ellipsis; */
   pointer-events: none;
   backdrop-filter: blur(4px);
-  transition: opacity 0.15s ease;
+  transition: opacity 0.05s ease;
 }
 
 .tag-label--private {
