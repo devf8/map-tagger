@@ -58,7 +58,7 @@ export default function SessionGate({ onImport, onCreate }) {
         <h1 className="sg-title">
           Map <span>Tagger</span>
           <span className="sg-sub" style={{ fontSize: '10px', marginLeft: 6, opacity:0.5 }}>
-            v1
+            v1.1
           </span>
         </h1>
         <p className="sg-sub">An image tagging tool with the GM's best interests in mind.</p>
