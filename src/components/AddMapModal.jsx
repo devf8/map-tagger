@@ -78,29 +78,7 @@ export default function AddMapModal({ onSave, onCancel }) {
             )}
           </section>
 
-          <section className="me-section">
-            <h3>Identity</h3>
-            <label>
-              <span>Display Name</span>
-              <input
-                type="text"
-                placeholder="My Map"
-                value={form.displayName}
-                onChange={e => set('displayName', e.target.value)}
-              />
-            </label>
-            <label>
-              <span>Description</span>
-              <textarea
-                placeholder="A description of this map…"
-                value={form.description}
-                onChange={e => set('description', e.target.value)}
-                rows={3}
-              />
-            </label>
-          </section>
-
-          <section className="me-section">
+                    <section className="me-section">
             <h3>Map Header <small>displayed above the map image</small></h3>
             <label>
               <span>Title</span>
@@ -120,7 +98,32 @@ export default function AddMapModal({ onSave, onCancel }) {
                 onChange={e => set('subtitle', e.target.value)}
               />
             </label>
+            <label>
+              <span>Description</span>
+              <textarea
+                placeholder="A description of this map…"
+                value={form.description}
+                onChange={e => set('description', e.target.value)}
+                rows={3}
+              />
+            </label>
           </section>
+
+          <section className="me-section">
+            <h3>Identity</h3>
+            <label>
+              <span>Display Name</span>
+              <input
+                type="text"
+                placeholder="My Map"
+                value={form.displayName}
+                onChange={e => set('displayName', e.target.value)}
+              />
+            </label>
+
+          </section>
+
+
 
         </div>
 

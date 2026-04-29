@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react'
 import './SessionGate.css'
 
-export default function SessionGate({ onImport, onCreate }) {
+export default function SessionGate({ onImport, onCreate, onImportBegin, onImportError }) {
   const inputRef = useRef(null)
   const [step, setStep] = useState('main')
   const [form, setForm] = useState({ title: '', description: '', password: '' })
@@ -10,10 +10,11 @@ export default function SessionGate({ onImport, onCreate }) {
   const handleFile = (e) => {
     const file = e.target.files[0]
     if (!file) return
+    onImportBegin?.()
     const reader = new FileReader()
     reader.onload = (ev) => {
       try { onImport(JSON.parse(ev.target.result)) }
-      catch { alert('Invalid session file.') }
+      catch { onImportError?.(); alert('Invalid session file.') }
     }
     reader.readAsText(file)
     e.target.value = ''
@@ -34,7 +35,7 @@ export default function SessionGate({ onImport, onCreate }) {
               <textarea placeholder="Session description…" value={form.description} onChange={e => set('description', e.target.value)} rows={3} />
             </label>
             <label>
-              <span>Editor Password</span>
+              <span>Editor Password <small>don't use a real one!</small></span>
               <input type="password" placeholder="Leave blank for no password" value={form.password} onChange={e => set('password', e.target.value)} />
             </label>
           </div>

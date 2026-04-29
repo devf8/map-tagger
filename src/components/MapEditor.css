@@ -14,8 +14,9 @@
   background: #1a1d27;
   border: 1px solid #353a52;
   border-radius: 12px;
-  width: 380px;
-  max-height: 88vh;
+  width: 660px;
+  max-width: calc(100vw - 32px);
+  max-height: 95vh;
   display: flex;
   flex-direction: column;
   box-shadow: 0 24px 64px rgba(0, 0, 0, 0.6);
@@ -27,7 +28,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 16px;
+  padding: 10px;
   border-bottom: 1px solid #353a52;
   flex-shrink: 0;
 }
@@ -62,10 +63,31 @@
 .me-close:hover { background: #252836; color: #e2e8f0; }
 
 .me-body {
-  overflow-y: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  overflow: hidden;
   flex: 1;
+  min-height: 0;
+}
+
+.me-col {
+  overflow-y: auto;
   scrollbar-width: thin;
   scrollbar-color: #353a52 transparent;
+}
+
+.me-col:first-child {
+  border-right: 1px solid #353a52;
+}
+
+.me-bg-preview {
+  width: 100%;
+  height: 70px;
+  border-radius: 6px;
+  border: 1px solid #353a52;
+  background-repeat: repeat;
+  background-size: 40px 40px;
+  margin-top: 6px;
 }
 
 .me-section {
@@ -176,6 +198,10 @@
   width: 100%;
   resize: none;
   outline: none;
+}
+
+.me-section textarea {
+  height: 200px;
 }
 
 .me-section input[type="text"]:focus,

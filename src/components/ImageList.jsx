@@ -1,7 +1,7 @@
 import { useRef, useCallback, useState } from 'react'
 import './ImageList.css'
 
-export default function ImageList({ images, selectedId, defaultMapId, onSelect, onAddMap, onDelete, onEdit, onReorder, onSetDefault, onImport, onExport }) {
+export default function ImageList({ images, selectedId, defaultMapId, onSelect, onAddMap, onDelete, onEdit, onReorder, onSetDefault, onImport, onExport, onImportBegin, onImportError }) {
   const importInputRef = useRef(null)
   const reorderDragIdRef = useRef(null)
   const [reorderDragId, setReorderDragId] = useState(null)
@@ -20,14 +20,15 @@ export default function ImageList({ images, selectedId, defaultMapId, onSelect, 
   const handleImportFile = useCallback((e) => {
     const file = e.target.files[0]
     if (!file) return
+    onImportBegin?.()
     const reader = new FileReader()
     reader.onload = (ev) => {
       try { onImport(JSON.parse(ev.target.result)) }
-      catch { alert('Invalid session file.') }
+      catch { onImportError?.(); alert('Invalid session file.') }
     }
     reader.readAsText(file)
     e.target.value = ''
-  }, [onImport])
+  }, [onImport, onImportBegin, onImportError])
 
   return (
     <div className="image-list">

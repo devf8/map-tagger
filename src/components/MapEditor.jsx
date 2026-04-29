@@ -43,99 +43,98 @@ export default function MapEditor({ image, isDefault, onToggleDefault, onSave, o
 
         <div className="me-body">
 
-          <section className="me-section">
-            <h3>Identity</h3>
+          {/* ── Left column: Identity ── */}
+          <div className="me-col">
+            <section className="me-section">
+              <h3>Identity</h3>
               <div className="me-checkbox-row">
-              <label className="me-checkbox-label">
-                <input
-                  type="checkbox"
-                  checked={!!isDefault}
-                  onChange={e => onToggleDefault(image.id, e.target.checked)}
-                />
-                <span>Default map</span>
-              </label>
-              <small>opened automatically when loading this session</small>
-            </div>
-            <label>
-              <span>Display Name</span>
-              <input
-                type="text"
-                placeholder="My Map"
-                value={form.displayName ?? ''}
-                onChange={e => set('displayName', e.target.value)}
-                autoFocus
-              />
-            </label>
-            <label>
-              <span>Description</span>
-              <textarea
-                placeholder="A description of this map…"
-                value={form.description ?? ''}
-                onChange={e => set('description', e.target.value)}
-                rows={3}
-              />
-            </label>
-            <label>
-              <span>Editor Notes <small>hidden in presentation</small></span>
-              <textarea
-                placeholder="Notes visible only in editor…"
-                value={form.privateNotes ?? ''}
-                onChange={e => set('privateNotes', e.target.value)}
-                rows={3}
-              />
-            </label>
-          </section>
-
-          <section className="me-section">
-            <h3>Map Header <small>displayed above the map image</small></h3>
-            <label>
-              <span>Title</span>
-              <input
-                type="text"
-                placeholder="The Kingdom of Terra"
-                value={form.title ?? ''}
-                onChange={e => set('title', e.target.value)}
-              />
-            </label>
-            <label>
-              <span>Subtitle</span>
-              <input
-                type="text"
-                placeholder="A land of adventure"
-                value={form.subtitle ?? ''}
-                onChange={e => set('subtitle', e.target.value)}
-              />
-            </label>
-          </section>
-
-          <section className="me-section">
-            <label>
-                <span>Background Pattern</span>
-              <div style={{ minHeight:21 }}>
-              <select
-                className="me-select"
-                value={form.background ?? ''}
-                onChange={e => set('background', e.target.value)}
-              >
-                {BACKGROUNDS.map(bg => (
-                  <option key={bg.id} value={bg.id}>{bg.label}</option>
-                ))}
-              </select>
+                <label className="me-checkbox-label">
+                  <input
+                    type="checkbox"
+                    checked={!!isDefault}
+                    onChange={e => onToggleDefault(image.id, e.target.checked)}
+                  />
+                  <span>Default map</span>
+                </label>
+                <small>opened automatically when loading this session</small>
               </div>
-            {form.background && (
-              <div
-                className="me-bg-preview"
-                style={{ backgroundImage: getBackgroundCss(form.background) }}
-              />
-            )}
-            </label>
-       
-          </section>
+              <label>
+                <span>Display Name</span>
+                <input
+                  type="text"
+                  placeholder="My Map"
+                  value={form.displayName ?? ''}
+                  onChange={e => set('displayName', e.target.value)}
+                  autoFocus
+                />
+              </label>
+              <label>
+                <span>Description</span>
+                <textarea
+                  placeholder="A description of this map…"
+                  value={form.description ?? ''}
+                  onChange={e => set('description', e.target.value)}
+                  rows={6}
+                />
+              </label>
+              <label>
+                <span>Editor Notes <small>hidden in presentation</small></span>
+                <textarea
+                  placeholder="Visible only in editor…"
+                  value={form.privateNotes ?? ''}
+                  onChange={e => set('privateNotes', e.target.value)}
+                  rows={6}
+                />
+              </label>
+            </section>
+          </div>
+
+          {/* ── Right column: Map Header + Appearance ── */}
+          <div className="me-col">
+            <section className="me-section">
+              <h3>Map Header <small>displayed above the map image</small></h3>
+              <label>
+                <span>Title</span>
+                <input
+                  type="text"
+                  placeholder="The Kingdom of Terra"
+                  value={form.title ?? ''}
+                  onChange={e => set('title', e.target.value)}
+                />
+              </label>
+              <label>
+                <span>Subtitle</span>
+                <input
+                  type="text"
+                  placeholder="A land of adventure"
+                  value={form.subtitle ?? ''}
+                  onChange={e => set('subtitle', e.target.value)}
+                />
+              </label>
+            </section>
+
+            <section className="me-section">
+              <h3>Appearance</h3>
+              <label>
+                <span>Background Pattern</span>
+                <div style={{ minHeight: 21 }}>
+                  <select
+                    className="me-select"
+                    value={form.background ?? ''}
+                    onChange={e => set('background', e.target.value)}
+                  >
+                    {BACKGROUNDS.map(bg => (
+                      <option key={bg.id} value={bg.id}>{bg.label}</option>
+                    ))}
+                  </select>
+                </div>
+              </label>
+            </section>
+          </div>
 
         </div>
 
         <div className="me-footer">
-          <button className="me-btn ghost" onClick={onCancel}>Cancel</button>
           <button className="me-btn primary" onClick={handleSave}>Save</button>
         </div>
 

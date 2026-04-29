@@ -28,9 +28,13 @@ export default function App() {
   const [sidebarVisible, setSidebarVisible] = useState(true)
   const [mapTransition, setMapTransition] = useState(null)
   const [mapHistory, setMapHistory] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
   const transitionTimer = useRef(null)
 
   useEffect(() => () => clearTimeout(transitionTimer.current), [])
+
+  const onImportBegin = useCallback(() => setIsLoading(true), [])
+  const onImportError = useCallback(() => setIsLoading(false), [])
 
   const selectImage = useCallback((image) => {
     setSelectedImage(image)
@@ -85,6 +89,7 @@ export default function App() {
     setPresentationMode(true)
     setSidebarVisible(true)
     setHasSession(true)
+    setIsLoading(false)
   }, [])
 
   const handleCreateSession = useCallback((meta) => {
@@ -303,8 +308,14 @@ export default function App() {
     return (
       <div className="app no-sidebar">
         <main className="main">
-          <SessionGate onImport={handleImport} onCreate={handleCreateSession} />
+          <SessionGate onImport={handleImport} onCreate={handleCreateSession} onImportBegin={onImportBegin} onImportError={onImportError} />
         </main>
+        {isLoading && (
+          <div className="loading-overlay">
+            <div className="loading-spinner" />
+            <span className="loading-text">Loading session…</span>
+          </div>
+        )}
       </div>
     )
   }
@@ -331,6 +342,8 @@ export default function App() {
             onSetDefault={handleSetDefaultMap}
             onImport={handleImport}
             onExport={handleExport}
+            onImportBegin={onImportBegin}
+            onImportError={onImportError}
           />
         </aside>
       )}
@@ -413,6 +426,13 @@ export default function App() {
           onConfirm={handlePasswordConfirm}
           onCancel={() => setShowPasswordPrompt(false)}
         />
+      )}
+
+      {isLoading && (
+        <div className="loading-overlay">
+          <div className="loading-spinner" />
+          <span className="loading-text">Loading session…</span>
+        </div>
       )}
     </div>
   )

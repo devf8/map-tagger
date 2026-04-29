@@ -14,7 +14,8 @@
   background: #1a1d27;
   border: 1px solid #353a52;
   border-radius: 12px;
-  width: 360px;
+  width: 680px;
+  max-width: calc(100vw - 32px);
   max-height: 88vh;
   display: flex;
   flex-direction: column;
@@ -70,11 +71,22 @@
 
 /* ── Body ── */
 .te-body {
-  overflow-y: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  overflow: hidden;
   flex: 1;
+  min-height: 0;
+}
+
+.te-col {
+  overflow-y: auto;
   padding: 4px 0;
   scrollbar-width: thin;
   scrollbar-color: #353a52 transparent;
+}
+
+.te-col:first-child {
+  border-right: 1px solid #353a52;
 }
 
 .te-section {
