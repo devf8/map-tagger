@@ -1,3 +1,7 @@
+.text--private {
+  color: #ffc83c;
+}
+
 .map-editor-overlay {
   position: fixed;
   inset: 0;
@@ -204,12 +208,15 @@
   height: 200px;
 }
 
+
+
 .me-section input[type="text"]:focus,
 .me-section input[type="url"]:focus,
 .me-section textarea:focus { border-color: #5c7cfa; }
 
 .me-section input::placeholder,
 .me-section textarea::placeholder { color: #545d7a; }
+
 
 .me-footer {
   display: flex;
@@ -236,6 +243,13 @@
 
 .me-btn.primary { background: #5c7cfa; color: #fff; }
 .me-btn.primary:hover { background: #748ffc; }
+
+.me-btn.danger {
+  background: rgba(252, 92, 125, 0.1);
+  color: #fc5c7d;
+  border: 1px solid rgba(252, 92, 125, 0.2);
+}
+.me-btn.danger:hover { background: rgba(252, 92, 125, 0.2); }
 
 .me-btn.ghost {
   background: transparent;

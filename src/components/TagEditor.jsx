@@ -95,6 +95,8 @@ export default function TagEditor({ tag, isNew, images = [], onSave, onDelete, o
               <label>
                 <span>Editor Notes <small>hidden in presentation</small></span>
                 <textarea
+                  spellCheck={false}
+                  className='text--private'
                   placeholder="Visible only in editor…"
                   value={form.editorNotes ?? ''}
                   onChange={e => set('editorNotes', e.target.value)}

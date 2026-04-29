@@ -128,7 +128,6 @@ export default function AddMapModal({ onSave, onCancel }) {
         </div>
 
         <div className="me-footer">
-          <button className="me-btn ghost" onClick={onCancel}>Cancel</button>
           <button
             className="me-btn primary"
             onClick={handleSave}

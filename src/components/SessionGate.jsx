@@ -35,7 +35,7 @@ export default function SessionGate({ onImport, onCreate, onImportBegin, onImpor
               <textarea placeholder="Session description…" value={form.description} onChange={e => set('description', e.target.value)} rows={3} />
             </label>
             <label>
-              <span>Editor Password <small>don't use a real one!</small></span>
+              <span>Editor Password <small>- don't use a real one!</small></span>
               <input type="password" placeholder="Leave blank for no password" value={form.password} onChange={e => set('password', e.target.value)} />
             </label>
           </div>
@@ -59,7 +59,7 @@ export default function SessionGate({ onImport, onCreate, onImportBegin, onImpor
         <h1 className="sg-title">
           Map <span>Tagger</span>
           <span className="sg-sub" style={{ fontSize: '10px', marginLeft: 6, opacity:0.5 }}>
-            v1.3
+            v1.4
           </span>
         </h1>
         <p className="sg-sub">An image tagging tool with the GM's best interests in mind.</p>

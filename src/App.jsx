@@ -47,17 +47,21 @@ export default function App() {
   const [isDragOver, setIsDragOver] = useState(false)
   const transitionTimer = useRef(null)
   const dragCounterRef = useRef(0)
+  const modalOpenRef = useRef(false)
 
   useEffect(() => () => clearTimeout(transitionTimer.current), [])
 
   const onImportBegin = useCallback(() => setIsLoading(true), [])
   const onImportError = useCallback(() => setIsLoading(false), [])
 
+  // Updated every render so stale closures in the drag useEffect always see current value
+  modalOpenRef.current = !!(editingTag && !presentationMode) || !!editingMap || showAddMap || showPasswordPrompt
+
   useEffect(() => {
     const isJsonDrag = (e) => e.dataTransfer?.types?.includes('Files')
 
     const onDragEnter = (e) => {
-      if (!isJsonDrag(e)) return
+      if (!isJsonDrag(e) || modalOpenRef.current) return
       e.preventDefault()
       dragCounterRef.current++
       setIsDragOver(true)
@@ -77,6 +81,7 @@ export default function App() {
       e.preventDefault()
       dragCounterRef.current = 0
       setIsDragOver(false)
+      if (modalOpenRef.current) return
       const file = [...(e.dataTransfer?.files ?? [])].find(f => f.name.endsWith('.json'))
       if (!file) return
       setIsLoading(true)
@@ -477,6 +482,7 @@ export default function App() {
           onToggleDefault={handleToggleDefaultMap}
           onSave={handleSaveMapMeta}
           onCancel={() => setEditingMap(null)}
+          onDelete={(id) => { deleteImage(id); setEditingMap(null) }}
         />
       )}
 

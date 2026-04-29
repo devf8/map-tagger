@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback, useRef } from 'react'
 import { BACKGROUNDS, getBackgroundCss } from './backgrounds'
 import './MapEditor.css'
 
-export default function MapEditor({ image, isDefault, onToggleDefault, onSave, onCancel }) {
+export default function MapEditor({ image, isDefault, onToggleDefault, onSave, onCancel, onDelete }) {
   const [form, setForm] = useState({})
   const overlayDownRef = useRef(false)
 
@@ -127,6 +127,8 @@ export default function MapEditor({ image, isDefault, onToggleDefault, onSave, o
               <label>
                 <span>Editor Notes <small>hidden in presentation</small></span>
                 <textarea
+                  spellCheck={false}
+                  className="text--private"
                   placeholder="Visible only in editor…"
                   value={form.privateNotes ?? ''}
                   onChange={e => set('privateNotes', e.target.value)}
@@ -139,6 +141,13 @@ export default function MapEditor({ image, isDefault, onToggleDefault, onSave, o
         </div>
 
         <div className="me-footer">
+          <button className="me-btn danger" onClick={() => onDelete(image.id)}>
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.2">
+              <path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+            Delete
+          </button>
+          <div style={{ flex: 1 }} />
           <button className="me-btn primary" onClick={handleSave}>Save</button>
         </div>
 
