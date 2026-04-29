@@ -9,6 +9,21 @@ import SessionGate from './components/SessionGate'
 import PasswordPrompt from './components/PasswordPrompt'
 import './App.css'
 
+function DropOverlay() {
+  return (
+    <div className="drop-overlay">
+      <div className="drop-overlay-zone">
+        <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="drop-overlay-icon">
+          <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+          <path d="M14 2v6h6M12 18v-6M9 15l3 3 3-3"/>
+        </svg>
+        <span className="drop-overlay-text">Drop to import session</span>
+        <span className="drop-overlay-sub">.json file</span>
+      </div>
+    </div>
+  )
+}
+
 export default function App() {
   const [hasSession, setHasSession] = useState(false)
   const [sessionMeta, setSessionMeta] = useState({ password: '', title: '', description: '', defaultMapId: '' })
@@ -29,12 +44,62 @@ export default function App() {
   const [mapTransition, setMapTransition] = useState(null)
   const [mapHistory, setMapHistory] = useState([])
   const [isLoading, setIsLoading] = useState(false)
+  const [isDragOver, setIsDragOver] = useState(false)
   const transitionTimer = useRef(null)
+  const dragCounterRef = useRef(0)
 
   useEffect(() => () => clearTimeout(transitionTimer.current), [])
 
   const onImportBegin = useCallback(() => setIsLoading(true), [])
   const onImportError = useCallback(() => setIsLoading(false), [])
+
+  useEffect(() => {
+    const isJsonDrag = (e) => e.dataTransfer?.types?.includes('Files')
+
+    const onDragEnter = (e) => {
+      if (!isJsonDrag(e)) return
+      e.preventDefault()
+      dragCounterRef.current++
+      setIsDragOver(true)
+    }
+    const onDragOver = (e) => {
+      if (!isJsonDrag(e)) return
+      e.preventDefault()
+    }
+    const onDragLeave = () => {
+      dragCounterRef.current--
+      if (dragCounterRef.current <= 0) {
+        dragCounterRef.current = 0
+        setIsDragOver(false)
+      }
+    }
+    const onDrop = (e) => {
+      e.preventDefault()
+      dragCounterRef.current = 0
+      setIsDragOver(false)
+      const file = [...(e.dataTransfer?.files ?? [])].find(f => f.name.endsWith('.json'))
+      if (!file) return
+      setIsLoading(true)
+      const reader = new FileReader()
+      reader.onload = (ev) => {
+        try { handleImport(JSON.parse(ev.target.result)) }
+        catch { setIsLoading(false); alert('Invalid session file.') }
+      }
+      reader.readAsText(file)
+    }
+
+    window.addEventListener('dragenter', onDragEnter)
+    window.addEventListener('dragover',  onDragOver)
+    window.addEventListener('dragleave', onDragLeave)
+    window.addEventListener('drop',      onDrop)
+    return () => {
+      window.removeEventListener('dragenter', onDragEnter)
+      window.removeEventListener('dragover',  onDragOver)
+      window.removeEventListener('dragleave', onDragLeave)
+      window.removeEventListener('drop',      onDrop)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const selectImage = useCallback((image) => {
     setSelectedImage(image)
@@ -310,6 +375,7 @@ export default function App() {
         <main className="main">
           <SessionGate onImport={handleImport} onCreate={handleCreateSession} onImportBegin={onImportBegin} onImportError={onImportError} />
         </main>
+        {isDragOver && <DropOverlay />}
         {isLoading && (
           <div className="loading-overlay">
             <div className="loading-spinner" />
@@ -428,6 +494,7 @@ export default function App() {
         />
       )}
 
+      {isDragOver && <DropOverlay />}
       {isLoading && (
         <div className="loading-overlay">
           <div className="loading-spinner" />

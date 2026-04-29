@@ -68,29 +68,24 @@ export default function MapEditor({ image, isDefault, onToggleDefault, onSave, o
                   autoFocus
                 />
               </label>
+   
+            </section>
+            <section className="me-section">
               <label>
-                <span>Description</span>
-                <textarea
-                  placeholder="A description of this map…"
-                  value={form.description ?? ''}
-                  onChange={e => set('description', e.target.value)}
-                  rows={6}
-                />
-              </label>
-              <label>
-                <span>Editor Notes <small>hidden in presentation</small></span>
-                <textarea
-                  placeholder="Visible only in editor…"
-                  value={form.privateNotes ?? ''}
-                  onChange={e => set('privateNotes', e.target.value)}
-                  rows={6}
-                />
+                <span>Background Pattern</span>
+                <div style={{ minHeight: 21 }}>
+                  <select
+                    className="me-select"
+                    value={form.background ?? ''}
+                    onChange={e => set('background', e.target.value)}
+                  >
+                    {BACKGROUNDS.map(bg => (
+                      <option key={bg.id} value={bg.id}>{bg.label}</option>
+                    ))}
+                  </select>
+                </div>
               </label>
             </section>
-          </div>
-
-          {/* ── Right column: Map Header + Appearance ── */}
-          <div className="me-col">
             <section className="me-section">
               <h3>Map Header <small>displayed above the map image</small></h3>
               <label>
@@ -113,21 +108,30 @@ export default function MapEditor({ image, isDefault, onToggleDefault, onSave, o
               </label>
             </section>
 
+
+          </div>
+
+          {/* ── Right column: Map Header + Appearance ── */}
+          <div className="me-col">
             <section className="me-section">
-              <h3>Appearance</h3>
+              <h3>Details</h3>
               <label>
-                <span>Background Pattern</span>
-                <div style={{ minHeight: 21 }}>
-                  <select
-                    className="me-select"
-                    value={form.background ?? ''}
-                    onChange={e => set('background', e.target.value)}
-                  >
-                    {BACKGROUNDS.map(bg => (
-                      <option key={bg.id} value={bg.id}>{bg.label}</option>
-                    ))}
-                  </select>
-                </div>
+                <span>Description</span>
+                <textarea
+                  placeholder="A description of this map…"
+                  value={form.description ?? ''}
+                  onChange={e => set('description', e.target.value)}
+                  rows={6}
+                />
+              </label>
+              <label>
+                <span>Editor Notes <small>hidden in presentation</small></span>
+                <textarea
+                  placeholder="Visible only in editor…"
+                  value={form.privateNotes ?? ''}
+                  onChange={e => set('privateNotes', e.target.value)}
+                  rows={6}
+                />
               </label>
             </section>
           </div>
