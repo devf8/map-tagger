@@ -22,7 +22,7 @@ export default function App() {
   const [editingMap, setEditingMap] = useState(null)
   const [showAddMap, setShowAddMap] = useState(false)
   const [tool, setTool] = useState('pan')
-  const [tagDefaults, setTagDefaults] = useState({ shape: 'circle', color: '#5c7cfa', size: 20, opacity: 100 })
+  const [tagDefaults, setTagDefaults] = useState({ shape: 'circle', color: '#5c7cfa', size: 20, opacity: 100, isPrivate: false })
   const [hiddenLabels, setHiddenLabels] = useState(new Set())
   const [presentationMode, setPresentationMode] = useState(false)
   const [sidebarVisible, setSidebarVisible] = useState(true)
@@ -247,10 +247,11 @@ export default function App() {
       id: crypto.randomUUID(), x, y,
       shortTitle: '', fullTitle: 'New Tag', description: '',
       editorNotes: '',
-      shape: tagDefaults.shape, 
-      color: tagDefaults.color, 
-      size: tagDefaults.size, 
+      shape: tagDefaults.shape,
+      color: tagDefaults.color,
+      size: tagDefaults.size,
       opacity: tagDefaults.opacity,
+      isPrivate: tagDefaults.isPrivate,
       tooltipPosition: 'top', linkedMapId: null, linkButtonText: '',
     }
     setEditingTag(newTag)

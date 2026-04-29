@@ -126,6 +126,20 @@ export default function Toolbar({ tool, onToolChange, tagDefaults, onTagDefaults
       </div>
 
 
+      <div className="toolbar-divider" />
+
+      {/* Private default */}
+      <div className="toolbar-group">
+        <label className="toolbar-check">
+          <input
+            type="checkbox"
+            checked={!!tagDefaults.isPrivate}
+            onChange={e => set('isPrivate', e.target.checked)}
+          />
+          <span className="toolbar-label" style={{color:"#ffc83cd7"}}>Private</span>
+        </label>
+      </div>
+
       {/* Present button — pushed to the right */}
       <div style={{ flex: 1 }} />
       <button className="tool-btn present-btn" onClick={onPresent} title="Enter presentation mode">

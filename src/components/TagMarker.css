@@ -119,6 +119,12 @@
   text-overflow: ellipsis;
 }
 
+.tag-tooltip-title--private {
+  font-style: italic;
+  color: #ffc83c;
+}
+
+
 .tag-tooltip-desc {
   font-size: 12px;
   color: #8892aa;
@@ -220,7 +226,8 @@
 }
 
 .tag-label--private {
- font-style: italic;
+  font-style: italic;
+  color: #ffc83c;
 }
 
 .tag-marker.active .tag-label {

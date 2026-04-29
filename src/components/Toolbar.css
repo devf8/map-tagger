@@ -159,6 +159,22 @@
   height: 100%;
 }
 
+/* ── Private checkbox ── */
+.toolbar-check {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.toolbar-check input[type="checkbox"] {
+  width: 14px;
+  height: 14px;
+  accent-color: #5c7cfa;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
 /* ── Size slider ── */
 .size-slider {
   -webkit-appearance: none;

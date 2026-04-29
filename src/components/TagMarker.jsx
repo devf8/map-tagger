@@ -88,7 +88,7 @@ export default function TagMarker({
             </button>
           )}
 
-          {tag.fullTitle && <div className="tag-tooltip-title">{tag.fullTitle}</div>}
+          {tag.fullTitle && <div className={`tag-tooltip-title ${tag.isPrivate ? 'tag-tooltip-title--private' : ''}`}>{tag.fullTitle}</div>}
           {tag.description && <div className="tag-tooltip-desc">{tag.description}</div>}
           {!presentationMode && tag.editorNotes && (
             <p className="tag-editor-notes">{tag.editorNotes}</p>
@@ -114,7 +114,7 @@ export default function TagMarker({
       </div>
 
       {tag.shortTitle && (
-        <div className={`tag-label ${tag.isPrivate? 'tag-label--private' : ''}`}>{tag.shortTitle}{tag.isPrivate && '*'}</div>
+        <div className={`tag-label ${tag.isPrivate? 'tag-label--private' : ''}`}>{tag.shortTitle}</div>
       )}
     </div>
   )
