@@ -117,7 +117,7 @@
   font-weight: 600;
   font-family: inherit;
   cursor: pointer;
-  background: #4b5268;
+  background: #364265;
   border: 1px solid #5670d8;
   color: #fff;
   backdrop-filter: blur(6px);
@@ -125,7 +125,7 @@
 }
 
 .lf-chip:hover {
-  background: #6775ab;
+  /* background: #6775ab; */
   border-color: #748ffc;
 }
 

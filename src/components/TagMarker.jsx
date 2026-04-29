@@ -13,18 +13,22 @@ export default function TagMarker({
   const [leaving, setLeaving] = useState(false)
   const timerRef = useRef(null)
 
-let POS_STYLE = {
-  top:    { bottom: 'calc(100% + 20px)', left: '50%',  transform: 'translateX(-50%)' },
-  bottom: { top: 'calc(100% + 20px)',   left: '50%',  transform: 'translateX(-50%)' },
-  left:   { right: 'calc(100% + 20px)', top: '50%',   transform: 'translateY(-50%)' },
-  right:  { left: 'calc(100% + 20px)',  top: '50%',   transform: 'translateY(-50%)' },
-}
-  POS_STYLE['top'].bottom = 'calc(100% + ' + (tag.tooltipGap ?? 20) + 'px)'
-  POS_STYLE['bottom'].top = 'calc(100% + ' + (tag.tooltipGap ?? 20) + 'px)'
-  POS_STYLE['left'].right = 'calc(100% + ' + (tag.tooltipGap ?? 20) + 'px)'
-  POS_STYLE['right'].left = 'calc(100% + ' + (tag.tooltipGap ?? 20) + 'px)'
-
+  const gap = tag.tooltipGap ?? 20
   const pos = tag.tooltipPosition || 'top'
+
+  const POS_STYLE = {
+    top:    { bottom: `calc(100% + ${gap}px)`, left: '50%',  transform: 'translateX(-50%)' },
+    bottom: { top:    `calc(100% + ${gap}px)`, left: '50%',  transform: 'translateX(-50%)' },
+    left:   { right:  `calc(100% + ${gap}px)`, top:  '50%',  transform: 'translateY(-50%)' },
+    right:  { left:   `calc(100% + ${gap}px)`, top:  '50%',  transform: 'translateY(-50%)' },
+  }
+
+  const BRIDGE_STYLE = {
+    top:    { bottom: '100%', height: gap, left: '50%', transform: 'translateX(-50%)', width: 300 },
+    bottom: { top:    '100%', height: gap, left: '50%', transform: 'translateX(-50%)', width: 300 },
+    left:   { right:  '100%', width: gap,  top:  '50%', transform: 'translateY(-50%)', height: 200 },
+    right:  { left:   '100%', width: gap,  top:  '50%', transform: 'translateY(-50%)', height: 200 },
+  }
   // Always show tooltip in edit mode so the gear button is reachable
   const hasTooltip = tag.fullTitle || tag.description || tag.linkedMapId || !presentationMode
 
@@ -65,6 +69,10 @@ let POS_STYLE = {
       onMouseEnter={handleEnter}
       onMouseLeave={handleLeave}
     >
+      {shown && hasTooltip && (
+        <div className="tag-gap-bridge" style={BRIDGE_STYLE[pos]} onMouseDown={e => e.stopPropagation()} />
+      )}
+
       {shown && hasTooltip && (
         <div
           className={`tag-tooltip tag-tooltip--${pos}${leaving ? ' leaving' : ''}${!presentationMode ? ' tag-tooltip--editable' : ''}`}

@@ -195,7 +195,7 @@ export default function TagEditor({ tag, isNew, images = [], onSave, onDelete, o
             <div className="te-field">
               <span>Tooltip gap <em>{form.tooltipGap ?? 20}px</em></span>
               <input
-                type="range" min="20" max="100"
+                type="range" min="20" max="40"
                 value={form.tooltipGap ?? 20}
                 onChange={e => set('tooltipGap', +e.target.value)}
                 className="te-slider"
