@@ -118,18 +118,18 @@ export default function Toolbar({ tool, onToolChange, tagDefaults, onTagDefaults
       </div>
 
       {/* Opacity slider */}
-      {/* <div className="toolbar-group">
-        <span className="toolbar-label">Opacity <em>{Math.round(tagDefaults.opacity * 100)}%</em></span>
+      <div className="toolbar-group">
+        <span className="toolbar-label">Opacity <em>{Math.round(tagDefaults.opacity)}%</em></span>
         <input
           type="range"
           min="0"
-          max="1"
-          step="0.1"
+          max="100"
+          step="10"
           value={tagDefaults.opacity}
           onChange={e => set('opacity', +e.target.value)}
           className="size-slider"
         />
-      </div> */}
+      </div>
 
 
       {/* Present button — pushed to the right */}

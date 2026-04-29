@@ -18,7 +18,11 @@ const POSITIONS = [
 
 export default function TagEditor({ tag, isNew, images = [], onSave, onDelete, onCancel }) {
   const [form, setForm] = useState(tag)
-  useEffect(() => { setForm(tag) }, [tag])
+  const [labelsInput, setLabelsInput] = useState((tag.labels ?? []).join(', '))
+  useEffect(() => {
+    setForm(tag)
+    setLabelsInput((tag.labels ?? []).join(', '))
+  }, [tag])
   const overlayDownRef = useRef(false)
 
   const set = (key, value) => setForm(prev => ({ ...prev, [key]: value }))
@@ -80,6 +84,16 @@ export default function TagEditor({ tag, isNew, images = [], onSave, onDelete, o
                 value={form.description}
                 onChange={e => set('description', e.target.value)}
                 rows={3}
+              />
+            </label>
+            <label>
+              <span>Labels <small>comma-separated</small></span>
+              <input
+                type="text"
+                placeholder="city, dungeon, npc"
+                value={labelsInput}
+                onChange={e => setLabelsInput(e.target.value)}
+                onBlur={e => set('labels', e.target.value.split(',').map(l => l.trim()).filter(Boolean))}
               />
             </label>
             <label>
@@ -186,9 +200,8 @@ export default function TagEditor({ tag, isNew, images = [], onSave, onDelete, o
             <div className="te-field">
               <span>Tooltip gap <em>{form.tooltipGap ?? 20}px</em></span>
               <input
-                defaultValue={20}
                 type="range" min="20" max="100"
-                value={form.tooltipGap}
+                value={form.tooltipGap ?? 20}
                 onChange={e => set('tooltipGap', +e.target.value)}
                 className="te-slider"
               />

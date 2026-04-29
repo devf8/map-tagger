@@ -73,7 +73,7 @@ export default function SessionGate({ onImport, onCreate }) {
           <button className="sg-btn ghost" onClick={() => setStep('new')}>New Session</button>
         </div>
         <p className="sg-sub" style={{ fontSize: '9px' }}>
-          Made by F8 for Jod ♥
+          by F8 for Jod ♥
         </p>
         <input ref={inputRef} type="file" accept=".json,application/json" style={{ display: 'none' }} onChange={handleFile} />
       </div>

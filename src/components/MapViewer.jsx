@@ -13,8 +13,8 @@ export default function MapViewer({
   imageUrl, tags, tool, presentationMode, transitionPhase, mapMeta,
   onMapClick, onTagClick, onNavigate, onTagMove, onExitPresentation, editingTagId,
   canNavigateBack, onNavigateBack,
+  allLabels = [], hiddenLabels = new Set(), onToggleLabel,
 }) {
-  console.log('hyeet mapmeta', mapMeta)
   const containerRef = useRef(null)
   const [transform, setTransform] = useState({ x: 0, y: 0, scale: 1 })
   const [imageSize, setImageSize] = useState({ width: 0, height: 0 })
@@ -248,7 +248,13 @@ export default function MapViewer({
 
       {imageSize.width > 0 && tags.map(tag => {
         if (presentationMode && tag.isPrivate) 
-          return null;
+          return null
+
+        const labels = tag.labels ?? []
+
+        if (labels.length > 0 && labels.every(label => hiddenLabels.has(label))) 
+          return null
+
         const t = tagDrag?.id === tag.id
           ? { ...tag, x: tagDrag.currentX, y: tagDrag.currentY }
           : tag
@@ -285,21 +291,52 @@ export default function MapViewer({
         </button>
       </div>
 
-      {canNavigateBack && (
-        <button className="nav-back-btn" onClick={onNavigateBack} title="Go back to previous map">
-          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M19 12H5M12 5l-7 7 7 7"/>
-          </svg>
-          Previous
-        </button>
+      {(canNavigateBack || allLabels.length > 0) && (
+        <div className="map-top-left">
+          {canNavigateBack && (
+            <button className="nav-back-btn" onClick={onNavigateBack} title="Go back to previous map">
+              <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M19 12H5M12 5l-7 7 7 7"/>
+              </svg>
+              Previous
+            </button>
+          )}
+
+          {!presentationMode && allLabels.length > 0 && (
+            <div className="label-filter">
+              <button
+                key="toggle-all-chip "
+                className={`lf-chip lf-chip--toggle-all`}
+                onClick={() => onToggleLabel('toggle-all')}
+                title={`Toggle all`}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="" width="16" height="16">
+                  <path d="M10 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" />
+                  <path fillRule="evenodd" d="M.664 10.59a1.651 1.651 0 0 1 0-1.186A10.004 10.004 0 0 1 10 3c4.257 0 7.893 2.66 9.336 6.41.147.381.146.804 0 1.186A10.004 10.004 0 0 1 10 17c-4.257 0-7.893-2.66-9.336-6.41ZM14 10a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z" clipRule="evenodd" />
+                </svg>
+              </button>
+              
+              {allLabels.map(label => (
+                <button
+                  key={label}
+                  className={`lf-chip${hiddenLabels.has(label) ? ' lf-chip--hidden' : ''}`}
+                  onClick={() => onToggleLabel(label)}
+                  title={hiddenLabels.has(label) ? `Show "${label}"` : `Hide "${label}"`}
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
       )}
 
       {presentationMode && (
         <button className="exit-present-btn" onClick={onExitPresentation} title="Editor">
-          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round">
-            <path d="M18 6L6 18M6 6l12 12"/>
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
           </svg>
-          Editor
         </button>
       )}
     </div>

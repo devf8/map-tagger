@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef, useEffect } from 'react'
+import { useState, useCallback, useRef, useEffect, useMemo } from 'react'
 import MapViewer from './components/MapViewer'
 import TagEditor from './components/TagEditor'
 import MapEditor from './components/MapEditor'
@@ -22,7 +22,8 @@ export default function App() {
   const [editingMap, setEditingMap] = useState(null)
   const [showAddMap, setShowAddMap] = useState(false)
   const [tool, setTool] = useState('pan')
-  const [tagDefaults, setTagDefaults] = useState({ shape: 'circle', color: '#5c7cfa', size: 28, opacity: 1 })
+  const [tagDefaults, setTagDefaults] = useState({ shape: 'circle', color: '#5c7cfa', size: 20, opacity: 100 })
+  const [hiddenLabels, setHiddenLabels] = useState(new Set())
   const [presentationMode, setPresentationMode] = useState(false)
   const [sidebarVisible, setSidebarVisible] = useState(true)
   const [mapTransition, setMapTransition] = useState(null)
@@ -35,7 +36,30 @@ export default function App() {
     setSelectedImage(image)
     setTags(image.tags ?? [])
     setEditingTag(null)
+    setHiddenLabels(new Set())
   }, [])
+
+  const allLabels = useMemo(
+    () => [...new Set(tags.flatMap(t => t.labels ?? []))].filter(Boolean).sort(),
+    [tags]
+  )
+
+  const handleToggleLabel = useCallback((label) => {
+    if (label === 'toggle-all') {
+      if (hiddenLabels.size <= allLabels.length && hiddenLabels.size > 0) {
+        setHiddenLabels(new Set());
+      } else {
+        setHiddenLabels(new Set(allLabels));
+      }
+      return;
+    }
+
+    setHiddenLabels(prev => {
+      const next = new Set(prev)
+      next.has(label) ? next.delete(label) : next.add(label)
+      return next
+    })
+  }, [hiddenLabels, allLabels])
 
   // Accepts already-parsed JSON data { password, title, description, defaultMapId, images }
   const handleImport = useCallback((data) => {
@@ -112,6 +136,7 @@ export default function App() {
     setEditingTag(null)
     setTool('pan')
     setPresentationMode(true)
+    setHiddenLabels(new Set())
   }, [])
 
   const exitPresentation = useCallback(() => {
@@ -222,7 +247,10 @@ export default function App() {
       id: crypto.randomUUID(), x, y,
       shortTitle: '', fullTitle: 'New Tag', description: '',
       editorNotes: '',
-      shape: tagDefaults.shape, color: tagDefaults.color, size: tagDefaults.size,
+      shape: tagDefaults.shape, 
+      color: tagDefaults.color, 
+      size: tagDefaults.size, 
+      opacity: tagDefaults.opacity,
       tooltipPosition: 'top', linkedMapId: null, linkButtonText: '',
     }
     setEditingTag(newTag)
@@ -334,6 +362,9 @@ export default function App() {
               editingTagId={editingTag?.id}
               canNavigateBack={mapHistory.length > 0}
               onNavigateBack={navigateBack}
+              allLabels={allLabels}
+              hiddenLabels={hiddenLabels}
+              onToggleLabel={handleToggleLabel}
             />
           </>
         ) : (
