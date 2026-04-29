@@ -1,12 +1,6 @@
 import ShapeIcon from './ShapeIcon'
+import { PRESETS, TOOLBAR_SHAPES } from '../constants'
 import './Toolbar.css'
-
-const SHAPES = ['circle', 'square', 'triangle', 'star', 'diamond']
-
-const PRESETS = [
-  '#5c7cfa', '#e74c3c', '#f39c12', '#2ecc71',
-  '#1abc9c', '#e91e63', '#9b59b6', '#ecf0f1',
-]
 
 export default function Toolbar({ tool, onToolChange, tagDefaults, onTagDefaultsChange, onPresent, sidebarVisible, onToggleSidebar }) {
   const set = (key, value) => onTagDefaultsChange(prev => ({ ...prev, [key]: value }))
@@ -60,14 +54,14 @@ export default function Toolbar({ tool, onToolChange, tagDefaults, onTagDefaults
       <div className="toolbar-group">
         <span className="toolbar-label">Shape</span>
         <div className="shape-picker">
-          {SHAPES.map(shape => (
+          {TOOLBAR_SHAPES.map(shape => (
             <button
               key={shape}
               className={`shape-btn ${tagDefaults.shape === shape ? 'active' : ''}`}
               onClick={() => set('shape', shape)}
               title={shape.charAt(0).toUpperCase() + shape.slice(1)}
             >
-              <ShapeIcon shape={shape} color={tagDefaults.shape === shape ? tagDefaults.color : '#8892aa'} size={18} />
+              <ShapeIcon shape={shape} color={tagDefaults.shape === shape ? tagDefaults.color : '#8892aa'} size={22} />
             </button>
           ))}
         </div>

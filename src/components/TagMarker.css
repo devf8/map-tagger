@@ -16,7 +16,7 @@
 /* ── Tooltip ─────────────────────────────────────── */
 .tag-tooltip {
   position: absolute;
-  background: rgba(15, 17, 23, 0.96);
+  background: rgba(15, 17, 23, 0.95);
   border: 1px solid #353a52;
   border-radius: 8px;
   padding: 10px 14px;
@@ -25,7 +25,7 @@
   /* pointer-events: auto keeps the tooltip "inside" the marker for mouseleave purposes */
   pointer-events: auto;
   backdrop-filter: blur(8px);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 4px 32px rgba(0, 0, 0, 0.3);
   /* Appear instantly — fade only happens on leave via .leaving */
   animation: tooltip-appear 0.1s ease;
   white-space: normal;
@@ -166,7 +166,7 @@
   align-items: center;
   justify-content: center;
   transition: transform 0.12s ease;
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4));
+  /* filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4)); */
   flex-shrink: 0;
 }
 
@@ -175,10 +175,10 @@
 }
 
 .tag-marker:not(.readonly):hover .tag-icon {
-  transform: scale(1.15);
+  transform: scale(1.1);
 }
 
-.tag-ring {
+.tag-rings {
   position: absolute;
   top: 50%;
   left: 50%;

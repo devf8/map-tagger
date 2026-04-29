@@ -1,12 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 import ShapeIcon from './ShapeIcon'
+import { SHAPES, PRESETS } from '../constants'
 import './TagEditor.css'
-
-const SHAPES = ['circle', 'square', 'triangle', 'star', 'diamond']
-const PRESETS = [
-  '#5c7cfa', '#e74c3c', '#f39c12', '#2ecc71',
-  '#1abc9c', '#e91e63', '#9b59b6', '#ecf0f1',
-]
 
 // Cross-pattern position picker: [col, row] in a 3×3 grid (1-indexed)
 const POSITIONS = [
@@ -130,7 +125,7 @@ export default function TagEditor({ tag, isNew, images = [], onSave, onDelete, o
                     key={shape}
                     className={`te-shape-btn ${form.shape === shape ? 'active' : ''}`}
                     onClick={() => set('shape', shape)}
-                    title={shape}
+                    title={shape.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')}
                   >
                     <ShapeIcon shape={shape} color={form.shape === shape ? form.color : '#545d7a'} size={22} />
                   </button>
