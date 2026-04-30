@@ -12,6 +12,7 @@ export default function TagMarker({
   const [shown, setShown] = useState(false)
   const [leaving, setLeaving] = useState(false)
   const timerRef = useRef(null)
+  const touchStartPos = useRef(null)
 
   const gap = tag.tooltipGap ?? 20
   const pos = tag.tooltipPosition || 'top'
@@ -62,12 +63,37 @@ export default function TagMarker({
     onNavigate?.(tag.linkedMapId)
   }, [tag.linkedMapId, onNavigate])
 
+  const handleTouchStartMarker = useCallback((e) => {
+    const touch = e.touches[0]
+    touchStartPos.current = { x: touch.clientX, y: touch.clientY }
+  }, [])
+
+  const handleTouchEndMarker = useCallback((e) => {
+    if (!touchStartPos.current) return
+    const touch = e.changedTouches[0]
+    const dx = touch.clientX - touchStartPos.current.x
+    const dy = touch.clientY - touchStartPos.current.y
+    touchStartPos.current = null
+    if (Math.hypot(dx, dy) < 8) {
+      if (shown) {
+        setLeaving(true)
+        timerRef.current = setTimeout(() => { setShown(false); setLeaving(false) }, 220)
+      } else if (hasTooltip) {
+        clearTimeout(timerRef.current)
+        setLeaving(false)
+        setShown(true)
+      }
+    }
+  }, [shown, hasTooltip])
+
   return (
     <div
       className={`tag-marker${isEditing ? ' editing' : ''}${shown ? ' active' : ''}${presentationMode ? ' readonly' : ''}`}
       style={{ left: screenX, top: screenY }}
       onMouseEnter={handleEnter}
       onMouseLeave={handleLeave}
+      onTouchStartCapture={handleTouchStartMarker}
+      onTouchEnd={handleTouchEndMarker}
     >
       {shown && hasTooltip && (
         <div className="tag-gap-bridge" style={BRIDGE_STYLE[pos]} onMouseDown={e => e.stopPropagation()} />
@@ -108,6 +134,10 @@ export default function TagMarker({
         className="tag-icon"
         style={{ width: tag.size, height: tag.size, opacity: (tag.opacity ?? 100) / 100 }}
         onMouseDown={!presentationMode ? (e) => { e.stopPropagation(); onDragStart?.(tag, e) } : undefined}
+        onTouchStart={!presentationMode ? (e) => {
+          const touch = e.touches[0]
+          onDragStart?.(tag, { clientX: touch.clientX, clientY: touch.clientY })
+        } : undefined}
       >
         <ShapeIcon shape={tag.shape} color={tag.color} size={tag.size} strokeWidth={1.5} />
         {isEditing && <div className="tag-ring" style={{ width: tag.size + 10, height: tag.size + 10 }} />}

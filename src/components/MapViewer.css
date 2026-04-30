@@ -28,6 +28,7 @@
     #0f1117;
   background-size: 40px 40px;
   user-select: none;
+  touch-action: none;
 }
 
 

@@ -36,6 +36,7 @@ export default function MapViewer({
   const imageSizeRef = useRef({ width: 0, height: 0 })
   const dragRef = useRef(null)
   const hasDraggedRef = useRef(false)
+  const touchRef = useRef(null)
 
 
   const applyTransform = useCallback((updater) => {
@@ -178,6 +179,101 @@ export default function MapViewer({
     }
   }, [tool, presentationMode, onMapClick, onTagMove, updateTagDrag])
 
+  const handleTouchStart = useCallback((e) => {
+    // Let tag markers handle their own touch (pan/pinch always allowed for 2+ fingers)
+    if (e.touches.length === 1 && e.target.closest('.tag-marker')) return
+
+    if (e.touches.length === 1) {
+      const touch = e.touches[0]
+      const t = transformRef.current
+      touchRef.current = { type: 'pan', startX: touch.clientX, startY: touch.clientY, tx: t.x, ty: t.y }
+      hasDraggedRef.current = false
+    } else if (e.touches.length === 2) {
+      const t1 = e.touches[0]
+      const t2 = e.touches[1]
+      const dist = Math.hypot(t2.clientX - t1.clientX, t2.clientY - t1.clientY)
+      const t = transformRef.current
+      touchRef.current = {
+        type: 'pinch',
+        startDist: dist,
+        startScale: t.scale,
+        midX: (t1.clientX + t2.clientX) / 2,
+        midY: (t1.clientY + t2.clientY) / 2,
+        tx: t.x,
+        ty: t.y,
+      }
+    }
+  }, [])
+
+  const handleTouchMove = useCallback((e) => {
+    if (tagDragRef.current && e.touches.length >= 1) {
+      const touch = e.touches[0]
+      const { startMouseX, startMouseY, origX, origY } = tagDragRef.current
+      const dx = touch.clientX - startMouseX
+      const dy = touch.clientY - startMouseY
+      if (Math.hypot(dx, dy) >= TAG_DRAG_MIN) {
+        const t = transformRef.current
+        const { width, height } = imageSizeRef.current
+        if (width === 0) return
+        const newX = Math.max(0, Math.min(1, origX + dx / (width * t.scale)))
+        const newY = Math.max(0, Math.min(1, origY + dy / (height * t.scale)))
+        updateTagDrag(prev => prev ? { ...prev, currentX: newX, currentY: newY, hasMoved: true } : null)
+      }
+      return
+    }
+
+    if (!touchRef.current) return
+
+    if (touchRef.current.type === 'pan' && e.touches.length === 1) {
+      const touch = e.touches[0]
+      const { startX, startY, tx, ty } = touchRef.current
+      const dx = touch.clientX - startX
+      const dy = touch.clientY - startY
+      if (Math.abs(dx) > DRAG_THRESHOLD || Math.abs(dy) > DRAG_THRESHOLD) hasDraggedRef.current = true
+      applyTransform(prev => ({ ...prev, x: tx + dx, y: ty + dy }))
+    } else if (touchRef.current.type === 'pinch' && e.touches.length === 2) {
+      const t1 = e.touches[0]
+      const t2 = e.touches[1]
+      const dist = Math.hypot(t2.clientX - t1.clientX, t2.clientY - t1.clientY)
+      const { startDist, startScale, midX, midY, tx, ty } = touchRef.current
+      const newScale = Math.min(MAX_SCALE, Math.max(MIN_SCALE, startScale * (dist / startDist)))
+      const container = containerRef.current
+      if (!container) return
+      const rect = container.getBoundingClientRect()
+      const cx = midX - rect.left
+      const cy = midY - rect.top
+      const ratio = newScale / startScale
+      applyTransform({ scale: newScale, x: cx - ratio * (cx - tx), y: cy - ratio * (cy - ty) })
+    }
+  }, [applyTransform, updateTagDrag])
+
+  const handleTouchEnd = useCallback((e) => {
+    if (tagDragRef.current) {
+      const drag = tagDragRef.current
+      if (drag.hasMoved) onTagMove?.(drag.id, drag.currentX, drag.currentY)
+      updateTagDrag(null)
+      touchRef.current = null
+      return
+    }
+
+    const wasDrag = hasDraggedRef.current
+    touchRef.current = null
+
+    if (!wasDrag && !presentationMode && tool === 'tag' && imageSizeRef.current.width > 0) {
+      const touch = e.changedTouches[0]
+      const container = containerRef.current
+      if (!container) return
+      const rect = container.getBoundingClientRect()
+      const cx = touch.clientX - rect.left
+      const cy = touch.clientY - rect.top
+      const t = transformRef.current
+      const { width, height } = imageSizeRef.current
+      const rx = (cx - t.x) / (width * t.scale)
+      const ry = (cy - t.y) / (height * t.scale)
+      if (rx >= 0 && rx <= 1 && ry >= 0 && ry <= 1) onMapClick(rx, ry)
+    }
+  }, [tool, presentationMode, onMapClick, onTagMove, updateTagDrag])
+
   const activeTool = presentationMode ? 'pan' : tool
   const cursor = transitionPhase ? 'default'
     : tagDrag ? 'default'
@@ -202,6 +298,9 @@ export default function MapViewer({
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
       onMouseLeave={handleMouseUp}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
     >
       {mapMeta?.background && (
         <div
@@ -293,8 +392,8 @@ export default function MapViewer({
       {!presentationMode && (
         <div className="map-hint">
           {activeTool === 'tag'
-            ? 'Click on the map to place a tag'
-            : 'Scroll to zoom · Drag to pan · Drag a tag icon to move it'}
+            ? 'Click or tap the map to place a tag'
+            : 'Scroll or pinch to zoom · Drag to pan · Drag a tag icon to move it'}
         </div>
       )}
 
