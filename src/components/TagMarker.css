@@ -36,7 +36,7 @@
   /* Appear instantly — fade only happens on leave via .leaving */
   animation: tooltip-appear 0.1s ease;
   white-space: normal;
-  z-index: 100;
+  z-index: 9999;
 }
 
 /* Fade out — only on leave. No fade-in. */
@@ -87,7 +87,7 @@
 }
 
 /* ── Gear edit button ── */
-.tag-gear-btn {
+.tag-edit-btn {
   position: absolute;
   top: 7px;
   right: 7px;
@@ -104,7 +104,7 @@
   transition: background 0.12s, color 0.12s;
 }
 
-.tag-gear-btn:hover {
+.tag-edit-btn:hover {
   background: #2d3148;
   color: #e2e8f0;
 }
@@ -193,7 +193,7 @@
   transform: scale(1.12);
 }
 
-.tag-rings {
+.tag-ring {
   position: absolute;
   top: 50%;
   left: 50%;

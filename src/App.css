@@ -34,6 +34,28 @@
   grid-template-columns: 1fr;
 }
 
+.home-bg-pattern {
+  opacity: 0.4;
+  position: absolute;
+  inset: 0;
+  background-repeat: repeat;
+  background-size: 600px 600px;
+  pointer-events: none;
+  z-index: 0;
+  animation: home-bg-pan 160s linear infinite alternate;
+  background-position: 0 0;
+}
+
+@keyframes home-bg-pan {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 600px 600px;
+  }
+}
+
+
 /* ── Sidebar ── */
 .sidebar {
   background: var(--surface);

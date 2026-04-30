@@ -125,7 +125,7 @@ export default function MapEditor({ image, isDefault, onToggleDefault, onSave, o
                 />
               </label>
               <label>
-                <span>Editor Notes <small>hidden in presentation</small></span>
+                <span className="text--private">Editor Notes <small>hidden in presentation</small></span>
                 <textarea
                   spellCheck={false}
                   className="text--private"

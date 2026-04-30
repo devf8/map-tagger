@@ -37,6 +37,7 @@ export default function MapViewer({
   const dragRef = useRef(null)
   const hasDraggedRef = useRef(false)
 
+
   const applyTransform = useCallback((updater) => {
     setTransform(prev => {
       const next = typeof updater === 'function' ? updater(prev) : updater
@@ -94,6 +95,9 @@ export default function MapViewer({
 
   // Called by TagMarker's icon mousedown — starts tag drag instead of map pan
   const handleTagDragStart = useCallback((tag, e) => {
+    if (tool === 'pan') {
+      return;
+    }
     updateTagDrag({
       id: tag.id,
       origX: tag.x,
@@ -104,7 +108,7 @@ export default function MapViewer({
       currentY: tag.y,
       hasMoved: false,
     })
-  }, [updateTagDrag])
+  }, [updateTagDrag, tool])
 
   const handleMouseDown = useCallback((e) => {
     if (e.button !== 0) return
@@ -201,7 +205,7 @@ export default function MapViewer({
     >
       {mapMeta?.background && (
         <div
-          className="map-bg-pattern"
+          className={`map-bg-pattern ${mapMeta.background === 'sea' ? 'map-bg-pattern--animated' : ''}`}
           style={{ backgroundImage: getBackgroundCss(mapMeta.background) }}
         />
       )}
@@ -346,10 +350,10 @@ export default function MapViewer({
 
       {presentationMode && (
         <button className="exit-present-btn" onClick={onExitPresentation} title="Editor">
-          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <circle cx="12" cy="12" r="3"/>
-            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
-          </svg>
+          <svg viewBox="0 0 24 24" width="12" height="12"   fill="none" stroke="currentColor" strokeWidth="2.2">
+              <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
         </button>
       )}
     </div>

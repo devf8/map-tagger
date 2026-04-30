@@ -93,7 +93,7 @@ export default function TagEditor({ tag, isNew, images = [], onSave, onDelete, o
                 />
               </label>
               <label>
-                <span>Editor Notes <small>hidden in presentation</small></span>
+                <span className="text--private">Editor Notes <small>hidden in presentation</small></span>
                 <textarea
                   spellCheck={false}
                   className='text--private'
@@ -110,9 +110,9 @@ export default function TagEditor({ tag, isNew, images = [], onSave, onDelete, o
                     checked={!!form.isPrivate}
                     onChange={e => set('isPrivate', e.target.checked)}
                   />
-                  <span>Private tag</span>
+                  <span class='text--private'>Private tag</span>
                 </label>
-                <small>Visible only in editor</small>
+                <small>hidden in presentation</small>
               </div>
             </section>
           </div>

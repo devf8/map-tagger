@@ -59,11 +59,11 @@ export default function SessionGate({ onImport, onCreate, onImportBegin, onImpor
         <h1 className="sg-title">
           Map <span>Tagger</span>
           <span className="sg-sub" style={{ fontSize: '10px', marginLeft: 6, opacity:0.5 }}>
-            v1.4
+            v1.6
           </span>
         </h1>
-        <p className="sg-sub">An image tagging tool with the GM's best interests in mind.</p>
-        <p className="sg-sub">Import a session .json file to begin, or start a new one.</p>
+        <p className="sg-sub">A tagging and annotation tool for maps</p>
+        <p className="sg-sub">Import a session .json file, or start a new session.</p>
         <div className="sg-actions">
           <button className="sg-btn primary" onClick={() => inputRef.current?.click()}>
             <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -73,7 +73,7 @@ export default function SessionGate({ onImport, onCreate, onImportBegin, onImpor
           </button>
           <button className="sg-btn ghost" onClick={() => setStep('new')}>New Session</button>
         </div>
-        <p className="sg-sub" style={{ fontSize: '9px' }}>
+        <p className="sg-sub" style={{ fontSize: '10px' }}>
           by F8 for Jod ♥
         </p>
         <input ref={inputRef} type="file" accept=".json,application/json" style={{ display: 'none' }} onChange={handleFile} />

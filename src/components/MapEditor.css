@@ -129,6 +129,13 @@
   margin-bottom: 10px;
 }
 
+.me-section label > span small {
+    font-size: 11px;
+    color: #545d7a;
+    font-weight: 400;
+    margin-left: 4px;
+}
+
 .me-section label:last-child { margin-bottom: 0; }
 
 .me-select {

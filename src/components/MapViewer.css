@@ -30,6 +30,32 @@
   user-select: none;
 }
 
+
+
+.map-bg-pattern {
+  position: absolute;
+  inset: 0;
+  background-repeat: repeat;
+  background-size: 600px 600px;
+  pointer-events: none;
+  z-index: 0;
+  background-position: 0 0;
+}
+
+.map-bg-pattern--animated {
+  animation: bg-pan-x 160s linear infinite alternate;
+}
+
+@keyframes bg-pan-x {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 600px 0;
+  }
+}
+
+
 .map-bg-pattern {
   position: absolute;
   inset: 0;
@@ -85,6 +111,7 @@
   display: flex;
   flex-direction: column;
   gap: 2px;
+  z-index: 10000;
 }
 
 .map-zoom-controls button {
@@ -211,6 +238,7 @@
   cursor: pointer;
   backdrop-filter: blur(8px);
   transition: background 0.12s, border-color 0.12s, color 0.12s;
+  z-index: 10000;
 }
 
 .exit-present-btn:hover {

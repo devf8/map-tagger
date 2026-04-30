@@ -7,6 +7,7 @@ import ImageList from './components/ImageList'
 import Toolbar from './components/Toolbar'
 import SessionGate from './components/SessionGate'
 import PasswordPrompt from './components/PasswordPrompt'
+import { getBackgroundCss } from './components/backgrounds'
 import './App.css'
 
 function DropOverlay() {
@@ -376,8 +377,13 @@ export default function App() {
 
   if (!hasSession) {
     return (
-      <div className="app no-sidebar">
+    <div className="app no-sidebar">
+
         <main className="main">
+          <div
+          className="home-bg-pattern"
+          style={{ backgroundImage: getBackgroundCss('topography') }}
+          />
           <SessionGate onImport={handleImport} onCreate={handleCreateSession} onImportBegin={onImportBegin} onImportError={onImportError} />
         </main>
         {isDragOver && <DropOverlay />}
