@@ -206,6 +206,11 @@ export default function MapViewer({
         />
       )}
 
+      {imageUrl && !imageError && imageSize.width === 0 && (
+        <div className="map-skeleton" >
+        </div>
+      )}
+
       {imageUrl && (
         <div
           className="map-image-layer"
@@ -217,7 +222,7 @@ export default function MapViewer({
           <img
             src={imageUrl}
             alt="Map"
-            className="map-image"
+            className={`map-image ${imageSize.width > 0 ? 'map-image--visible' : ''}`}
             onLoad={handleImageLoad}
             onError={() => setImageError(true)}
             draggable={false}
