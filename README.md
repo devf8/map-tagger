@@ -81,5 +81,9 @@ Output goes to `dist/`. Serve the folder with any static file host.
 
 
 ## Dev notes
-Session exports are encoded using base64. You can use [CyberChef](https://gchq.github.io/CyberChef/) to decode this manually if needed.
+Session export .mt files are encoded using Base64. You can use [CyberChef](https://gchq.github.io/CyberChef/) to decode this manually if needed.
+
+`From Base64 > URL Decode`
+
+This should output a json string.
 
