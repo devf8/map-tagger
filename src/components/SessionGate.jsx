@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react'
 import './SessionGate.css'
+import { decryptSession } from '../utils/crypto'
 
 export default function SessionGate({ onImport, onCreate, onImportBegin, onImportError }) {
   const inputRef = useRef(null)
@@ -12,9 +13,9 @@ export default function SessionGate({ onImport, onCreate, onImportBegin, onImpor
     if (!file) return
     onImportBegin?.()
     const reader = new FileReader()
-    reader.onload = (ev) => {
-      try { onImport(JSON.parse(ev.target.result)) }
-      catch { onImportError?.(); alert('Invalid session file.') }
+    reader.onload = async (ev) => {
+      try { onImport(await decryptSession(ev.target.result)) }
+      catch { onImportError?.(); alert('Invalid or corrupted session file.') }
     }
     reader.readAsText(file)
     e.target.value = ''
@@ -58,25 +59,25 @@ export default function SessionGate({ onImport, onCreate, onImportBegin, onImpor
         </div>
         <h1 className="sg-title">
           Map <span>Tagger</span>
-          <span className="sg-sub" style={{ fontSize: '10px', marginLeft: 6, opacity:0.5 }}>
-            v1.8
+          <span className="sg-sub sg-sub-ver">
+            v1.9
           </span>
         </h1>
-        <p className="sg-sub">A tagging and annotation tool for maps</p>
-        <p className="sg-sub">Import a session .json file, or start a new session.</p>
+        <p className="sg-sub">A tagging and annotation tool designed for maps</p>
+        <p className="sg-sub">Import an .mt file by dragging it onto the page, or start a new session</p>
         <div className="sg-actions">
           <button className="sg-btn primary" onClick={() => inputRef.current?.click()}>
             <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12"/>
             </svg>
-            Import Session
+            Import session .mt file
           </button>
-          <button className="sg-btn ghost" onClick={() => setStep('new')}>New Session</button>
+          <button className="sg-btn ghost" onClick={() => setStep('new')}>New session</button>
         </div>
-        <p className="sg-sub" style={{ fontSize: '10px' }}>
+        <p className="sg-sub sg-sub-ver" style={{ fontSize: '10px' }}>
           by F8 for Jod ♥
         </p>
-        <input ref={inputRef} type="file" accept=".json,application/json" style={{ display: 'none' }} onChange={handleFile} />
+        <input ref={inputRef} type="file" accept=".mt,.json,application/json" style={{ display: 'none' }} onChange={handleFile} />
       </div>
     </div>
   )

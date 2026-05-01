@@ -1,5 +1,6 @@
 import { useRef, useCallback, useState } from 'react'
 import './ImageList.css'
+import { decryptSession } from '../utils/crypto'
 
 export default function ImageList({ images, selectedId, defaultMapId, onSelect, onAddMap, onDelete, onEdit, onReorder, onSetDefault, onImport, onExport, onImportBegin, onImportError }) {
   const importInputRef = useRef(null)
@@ -17,9 +18,9 @@ export default function ImageList({ images, selectedId, defaultMapId, onSelect, 
     if (!file) return
     onImportBegin?.()
     const reader = new FileReader()
-    reader.onload = (ev) => {
-      try { onImport(JSON.parse(ev.target.result)) }
-      catch { onImportError?.(); alert('Invalid session file.') }
+    reader.onload = async (ev) => {
+      try { onImport(await decryptSession(ev.target.result)) }
+      catch { onImportError?.(); alert('Invalid or corrupted session file.') }
     }
     reader.readAsText(file)
     e.target.value = ''
@@ -136,17 +137,17 @@ export default function ImageList({ images, selectedId, defaultMapId, onSelect, 
         <input
           ref={importInputRef}
           type="file"
-          accept=".json"
+          accept=".mt,.json"
           style={{ display: 'none' }}
           onChange={handleImportFile}
         />
-        <button className="data-btn" onClick={() => importInputRef.current?.click()} title="Import data.json">
+        <button className="data-btn" onClick={() => importInputRef.current?.click()} title="Import session">
           <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2">
             <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
           Import
         </button>
-        <button className="data-btn" onClick={onExport} title="Export data.json">
+        <button className="data-btn" onClick={onExport} title="Export session">
           <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2">
             <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>

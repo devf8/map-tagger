@@ -8,6 +8,7 @@ import Toolbar from './components/Toolbar'
 import SessionGate from './components/SessionGate'
 import PasswordPrompt from './components/PasswordPrompt'
 import { getBackgroundCss } from './components/backgrounds'
+import { encryptSession, decryptSession } from './utils/crypto'
 import './App.css'
 
 function DropOverlay() {
@@ -19,7 +20,7 @@ function DropOverlay() {
           <path d="M14 2v6h6M12 18v-6M9 15l3 3 3-3"/>
         </svg>
         <span className="drop-overlay-text">Drop to import session</span>
-        <span className="drop-overlay-sub">.json file</span>
+        <span className="drop-overlay-sub">.mt or .json file</span>
       </div>
     </div>
   )
@@ -83,13 +84,13 @@ export default function App() {
       dragCounterRef.current = 0
       setIsDragOver(false)
       if (modalOpenRef.current) return
-      const file = [...(e.dataTransfer?.files ?? [])].find(f => f.name.endsWith('.json'))
+      const file = [...(e.dataTransfer?.files ?? [])].find(f => f.name.endsWith('.mt') || f.name.endsWith('.json'))
       if (!file) return
       setIsLoading(true)
       const reader = new FileReader()
-      reader.onload = (ev) => {
-        try { handleImport(JSON.parse(ev.target.result)) }
-        catch { setIsLoading(false); alert('Invalid session file.') }
+      reader.onload = async (ev) => {
+        try { handleImport(await decryptSession(ev.target.result)) }
+        catch { setIsLoading(false); alert('Invalid or corrupted session file.') }
       }
       reader.readAsText(file)
     }
@@ -104,7 +105,6 @@ export default function App() {
       window.removeEventListener('dragleave', onDragLeave)
       window.removeEventListener('drop',      onDrop)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const selectImage = useCallback((image) => {
@@ -191,7 +191,7 @@ export default function App() {
     }))
   }, [])
 
-  const handleExport = useCallback(() => {
+  const handleExport = useCallback(async () => {
     const data = {
       password: sessionMeta.password,
       title: sessionMeta.title,
@@ -199,11 +199,12 @@ export default function App() {
       defaultMapId: sessionMeta.defaultMapId || images[0]?.id || '',
       images,
     }
-    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' })
+    const encrypted = await encryptSession(data)
+    const blob = new Blob([encrypted], { type: 'application/octet-stream' })
     const url = URL.createObjectURL(blob)
     const a = document.createElement('a')
     a.href = url
-    a.download = `${(sessionMeta.title || 'map-session').replace(/[^a-z0-9]/gi, '-')}.json`
+    a.download = `${(sessionMeta.title || 'map-session').replace(/[^a-z0-9]/gi, '-')}.mt`
     a.click()
     URL.revokeObjectURL(url)
   }, [sessionMeta, images])

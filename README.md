@@ -78,3 +78,8 @@ Output goes to `dist/`. Serve the folder with any static file host.
 4. Optionally link tags to other maps to create drill-down navigation
 5. Click **Present** to enter presentation mode for showing to players
 6. **Export** to save the session as a `.json` file for later
+
+
+## Dev notes
+Session exports are encoded using base64. You can use [CyberChef](https://gchq.github.io/CyberChef/) to decode this manually if needed.
+
