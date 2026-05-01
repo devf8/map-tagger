@@ -311,6 +311,9 @@ export default function MapViewer({
 
       {imageUrl && !imageError && imageSize.width === 0 && (
         <div className="map-skeleton" >
+          <div className="map-skeleton-content">
+            LOADING...
+          </div>
         </div>
       )}
 

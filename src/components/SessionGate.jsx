@@ -59,7 +59,7 @@ export default function SessionGate({ onImport, onCreate, onImportBegin, onImpor
         <h1 className="sg-title">
           Map <span>Tagger</span>
           <span className="sg-sub" style={{ fontSize: '10px', marginLeft: 6, opacity:0.5 }}>
-            v1.7
+            v1.8
           </span>
         </h1>
         <p className="sg-sub">A tagging and annotation tool for maps</p>
