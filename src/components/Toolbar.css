@@ -1,9 +1,10 @@
 .toolbar {
   display: flex;
+  align-items: center;
+  justify-content: center;
   flex-wrap: wrap;
-  align-items: stretch;
   background: #1a1d27;
-  border-bottom: 1px solid #353a52;
+  border-bottom: 1px solid #252836;
   flex-shrink: 0;
 }
 
@@ -11,24 +12,22 @@
   display: flex;
   align-items: center;
   gap: 4px;
-  padding: 0 12px 0 16px;
+  padding: 0 12px 0 12px;
   height: 52px;
   flex-shrink: 0;
 }
 
 .toolbar-defaults {
+  background-color: #11131e;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 4px;
-  padding: 0 16px;
-  height: 52px;
+  padding: 10px 12px;
+  min-height: 52px;
   flex: 1;
   min-width: 0;
-  overflow-x: auto;
-  scrollbar-width: none;
 }
-
-.toolbar-defaults::-webkit-scrollbar { display: none; }
 
 .toolbar-fill {
   flex: 1;
@@ -41,7 +40,7 @@
     height: 46px;
   }
   .toolbar-defaults {
-    height: 44px;
+    min-height: 44px;
     flex: none;
     width: 100%;
   }
@@ -76,7 +75,7 @@
   width: 1px;
   height: 28px;
   background: #353a52;
-  margin: 0 8px;
+  margin: 0 6px;
   flex-shrink: 0;
 }
 

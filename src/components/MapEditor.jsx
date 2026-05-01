@@ -1,13 +1,16 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 import { BACKGROUNDS, getBackgroundCss } from './backgrounds'
 import './MapEditor.css'
+import './AddMapModal.css'
 
 export default function MapEditor({ image, isDefault, onToggleDefault, onSave, onCancel, onDelete }) {
   const [form, setForm] = useState({})
+  const [previewError, setPreviewError] = useState(false)
   const overlayDownRef = useRef(false)
 
   useEffect(() => {
     setForm({
+      imageUrl: image.imageUrl || '',
       displayName: image.displayName || '',
       title: image.title || '',
       subtitle: image.subtitle || '',
@@ -15,9 +18,13 @@ export default function MapEditor({ image, isDefault, onToggleDefault, onSave, o
       privateNotes: image.privateNotes || '',
       background: image.background || '',
     })
+    setPreviewError(false)
   }, [image])
 
-  const set = (key, val) => setForm(prev => ({ ...prev, [key]: val }))
+  const set = (key, val) => {
+    setForm(prev => ({ ...prev, [key]: val }))
+    if (key === 'imageUrl') setPreviewError(false)
+  }
 
   const handleSave = useCallback(() => onSave(image.id, form), [image.id, form, onSave])
 
@@ -45,6 +52,27 @@ export default function MapEditor({ image, isDefault, onToggleDefault, onSave, o
 
           {/* ── Left column: Identity ── */}
           <div className="me-col">
+            <section className="me-section">
+              <h3>Image</h3>
+              <label>
+                <span>Image URL <em style={{ color: '#fc5c7d', fontStyle: 'normal' }}>*</em></span>
+                <input
+                  type="url"
+                  placeholder="https://example.com/map.jpg"
+                  value={form.imageUrl ?? ''}
+                  onChange={e => set('imageUrl', e.target.value)}
+                />
+              </label>
+              {form.imageUrl?.trim() && (
+                <div className="am-preview">
+                  {!previewError ? (
+                    <img src={form.imageUrl} alt="Preview" onError={() => setPreviewError(true)} />
+                  ) : (
+                    <div className="am-preview-error">Could not load image from this URL</div>
+                  )}
+                </div>
+              )}
+            </section>
             <section className="me-section">
               <h3>Identity</h3>
               <div className="me-checkbox-row">
